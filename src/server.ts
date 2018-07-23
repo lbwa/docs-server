@@ -48,7 +48,7 @@ function setResHeaders (customHeader: resHeaders) {
   }
 }
 
-module.exports = function (customHeaders: resHeaders = {}, threshold: number = 1) {
+function koaWrapper (customHeaders: resHeaders = {}, threshold: number = 1) {
   // Make sure router instance to the final
   koa
     .use(finalController)
@@ -61,3 +61,5 @@ module.exports = function (customHeaders: resHeaders = {}, threshold: number = 1
 
   return koa
 }
+
+module.exports = koaWrapper

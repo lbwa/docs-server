@@ -10,6 +10,7 @@
   "scripts": {
     "ts": "npx tsc",
     "server": "node dist/index",
+    "dev": "yarn run ts && yarn run server",
     "commit": "git add . && git-cz"
   },
   "dependencies": {
