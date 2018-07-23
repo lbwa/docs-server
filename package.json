@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "ts": "yarn run tsc",
+    "ts": "npx tsc",
     "server": "node dist/index",
     "commit": "git add . && git-cz"
   },
