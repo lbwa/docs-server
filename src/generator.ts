@@ -1,4 +1,4 @@
-import { meta, post, initialContent, contentList } from './config/types'
+import { meta, post, initialContent, contentList, targetPath } from './config/types'
 
 const fs = require('fs')
 const path = require('path')
@@ -11,11 +11,11 @@ class Gen {
   contentList: contentList
 
   constructor () {
+    // injected docs data when this.activate is invoked
     this.contentList = {}
   }
 
-  // trigger
-  async genMenu ({ cwd, catalogOutput }: { cwd: string, catalogOutput: string}) {
+  async activate ({ cwd, catalogOutput }: targetPath) {
     let headMeta: string
 
     try {
@@ -151,4 +151,6 @@ class Gen {
   }
 }
 
-module.exports = Gen
+const gen = new Gen()
+
+module.exports = gen

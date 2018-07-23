@@ -1,13 +1,10 @@
 const koa = require('./server')
 const config = require('./config/index')
-const Gen = require('./generator')
-
-const resolve = require('path').resolve
-
-const gen = new Gen()
+const gen = require('./generator')
+const { resolve } = require('./utils/index')
 
 gen
-  .genMenu({
+  .activate({
     cwd: resolve(__dirname, '../'),
     catalogOutput: resolve(__dirname, '../menu.json')
   })

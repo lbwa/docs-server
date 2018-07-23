@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "description": "A server which is used to build a microserver for docs system",
   "main": "index.js",
-  "repository": "git@github.com:lbwa/docs-server.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lbwa/jsonp.git"
+  },
   "author": "Bowen <mr_lbw@outlook.com>",
   "license": "MIT",
   "private": true,
@@ -35,5 +38,14 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/lbwa/docs-server/issues"
+  },
+  "homepage": "https://github.com/lbwa/docs-server#readme",
+  "keywords": [
+    "docs-server",
+    "blog",
+    "koa"
+  ]
 }

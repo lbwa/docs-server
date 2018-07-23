@@ -1,12 +1,12 @@
-const baseConfig = {
-  HOST: '127.0.0.1',
-  PORT: '8800'
-}
+// 若写为 import customConfig = require('../../docs-server.config') 将导致所有
+// console 失效
+const customConfig = require('../../docs-server.config')
 
-const customConfig = {}
+const baseConfig = {
+  PORT: '8800',
+  directory: 'doc'
+}
 
 const config = Object.assign(baseConfig, customConfig)
 
 module.exports = config
-
-export {}

@@ -30,3 +30,8 @@ interface contentItem extends post {
 export interface contentList {
   [path: string]: contentItem
 }
+
+export interface targetPath {
+  cwd: string,
+  catalogOutput: string
+}

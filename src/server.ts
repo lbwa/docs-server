@@ -10,6 +10,7 @@ const koa = new Koa()
 
 async function finalController (ctx: Koa.Context, next: Function) {
   try {
+    console.log('Request path :', ctx.path)
     const START = process.hrtime()
     await next ()
     const PERIOD = process.hrtime(START)

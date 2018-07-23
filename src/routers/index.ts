@@ -1,20 +1,14 @@
 import Router = require('koa-router')
-import Koa = require('koa')
 
-const { stringify } = require('../utils/index')
+const config = require('../config/index')
+const docs = require('../controllers/docs')
+const error = require('../controllers/error')
 
 const router = new Router()
 
 router
-  .get('*', async (ctx: Koa.Context, next: Function) => {
-    ctx.status = 200
-    ctx.body = stringify({
-      errno: 0,
-      message: 'hello world'
-    })
-    ctx.set({
-      'Content-Type': 'application/json, charset=utf-8'
-    })
-  })
+  // only file name
+  .get(`/${config.directory}/:id`, docs)
+  .get('*', error)
 
 module.exports = router
