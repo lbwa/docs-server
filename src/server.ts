@@ -1,14 +1,11 @@
 import Koa = require('koa')
 import compress = require('koa-compress')
-import { resHeaders } from './config/types'
+import { resHeaders, server } from './config/types'
 
 const router = require('./routers/index')
 const { stringify } = require('./utils/index')
 
-// instance
-const koa = new Koa()
-
-async function finalController (ctx: Koa.Context, next: Function) {
+async function ioMiddleware (ctx: Koa.Context, next: Function) {
   try {
     console.log('Request path :', ctx.path)
     const START = process.hrtime()
@@ -49,18 +46,34 @@ function setResHeaders (customHeader: resHeaders) {
   }
 }
 
-function koaWrapper (customHeaders: resHeaders = {}, threshold: number = 1) {
-  // Make sure router instance to the final
-  koa
-    .use(finalController)
-    .use(setResHeaders(customHeaders))
-    .use(compress({
+class Server extends Koa {
+  // Once params is empty object, customHeaders and threshold will be set default value
+  constructor ({ customHeaders={}, threshold=1 }: server = {}) {
+    super()
+    this.setIOMiddleware()
+    this.setResHeaders(customHeaders)
+    this.setGzip(threshold)
+    this.setRouter()
+  }
+
+  setIOMiddleware () {
+    this.use(ioMiddleware)
+  }
+
+  setResHeaders (customHeaders: resHeaders = {}) {
+    this.use(setResHeaders(customHeaders))
+  }
+
+  setGzip (threshold: number=1) {
+    this.use(compress({
       threshold
     }))
-    .use(router.routes())
-    .use(router.allowedMethods())
+  }
 
-  return koa
+  setRouter () {
+    this.use(router.routes())
+    this.use(router.allowedMethods())
+  }
 }
 
-module.exports = koaWrapper
+module.exports = Server

@@ -1,4 +1,4 @@
-const koa = require('./server')
+const Server = require('./server')
 const config = require('./config/index')
 const gen = require('./generator')
 const { resolve } = require('./utils/index')
@@ -9,7 +9,8 @@ gen
     catalogOutput: resolve(__dirname, '../menu.json')
   })
   .then(() => {
-    koa().listen(config.PORT, () => {
+    const server = new Server()
+    server.listen(config.PORT, () => {
       console.log(`\nServer is listening on http://localhost:${config.PORT}\n`)
     })
   })

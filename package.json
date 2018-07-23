@@ -14,7 +14,8 @@
     "ts": "npx tsc",
     "server": "node dist/index",
     "dev": "yarn run ts && yarn run server",
-    "commit": "git add . && git-cz"
+    "commit": "git add . && git-cz",
+    "clean": "rm -vrf dist/*"
   },
   "dependencies": {
     "front-matter": "^2.3.0",
@@ -31,6 +32,7 @@
     "@types/koa-send": "^4.1.1",
     "@types/node": "^10.5.2",
     "commitizen": "^2.10.1",
+    "cross-env": "^5.2.0",
     "cz-conventional-changelog": "^2.1.0",
     "typescript": "^2.9.2"
   },

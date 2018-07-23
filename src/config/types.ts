@@ -9,13 +9,13 @@ export interface meta {
   tags: string[]
 }
 
-export interface post {
+export interface post extends meta {
   errno: number
   to: string
-  title: string
-  author: string
-  date: string
-  tags: string[]
+}
+
+interface contentItem extends post {
+  data: string
 }
 
 export interface initialContent {
@@ -23,15 +23,16 @@ export interface initialContent {
   origin: string
 }
 
-interface contentItem extends post {
-  data: string
-}
-
 export interface contentList {
   [path: string]: contentItem
 }
 
 export interface targetPath {
-  cwd: string,
+  cwd: string
   catalogOutput: string
+}
+
+export interface server {
+  customHeaders?: resHeaders
+  threshold?: number
 }
