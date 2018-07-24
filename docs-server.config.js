@@ -2,9 +2,6 @@ const send = require('koa-send')
 const resolve = require('path').resolve
 
 module.exports = {
-  // Server port
-  PORT: '8800',
-
   // documents directory
   // based on root path
   docsPath: 'sample',
