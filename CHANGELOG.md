@@ -1,5 +1,15 @@
+<a name="0.1.1"></a>
+## [0.1.1](https://github.com/lbwa/jsonp/compare/v0.1.0...v0.1.1) (2018-07-24)
+
+
+### Bug Fixes
+
+* **generator:** correct target file path by fs.readFile in generator module ([54d2aa1](https://github.com/lbwa/jsonp/commit/54d2aa1))
+
+
+
 <a name="0.1.0"></a>
-# 0.1.0 (2018-07-24)
+# [0.1.0](https://github.com/lbwa/jsonp/compare/5c7be78...v0.1.0) (2018-07-24)
 
 
 ### Features
