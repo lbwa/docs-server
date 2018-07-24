@@ -4,4 +4,12 @@
 
 ## Feature
 
-- Support markdown files.
+- Automatic search markdown files and generate correct dynamic route according to root path
+
+- Support for specifying additional static routes
+
+## Usage
+
+```js
+const app = new Application()
+```

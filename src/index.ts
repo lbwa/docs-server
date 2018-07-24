@@ -5,7 +5,7 @@ const gen = require('./generator')
 const join = require('path').join
 
 function resolve (dir: string): string {
-  return join(__dirname, '..', dir)
+  return join(process.cwd(), dir)
 }
 
 class Application {
@@ -53,7 +53,3 @@ class Application {
 }
 
 module.exports = Application
-
-export {}
-
-// TODO: 1. wrap docs-server.config.js

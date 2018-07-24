@@ -1,8 +1,23 @@
+const send = require('koa-send')
+const resolve = require('path').resolve
+
 module.exports = {
   // Server port
   PORT: '8800',
 
+  // documents directory
   // based on root path
-  // keep value same as target directory
-  directory: 'doc'
+  docsPath: 'sample',
+
+  // extra static file route
+  routes: [
+    {
+      path: 'menu',
+      callback: async (ctx, next) => {
+        await send(ctx, './menu.json', {
+          root: resolve(__dirname, './')
+        })
+      }
+    }
+  ]
 }
