@@ -1,10 +1,10 @@
 # Docs-server [![npm](https://img.shields.io/npm/v/docs-server.svg)](https://www.npmjs.com/package/docs-server)
 
-> A server which is used to build a microserver for docs system.
+> A server which is used to build a kind of microservices for docs system.
 
 ## Feature
 
-- Automatic search markdown files and generate correct dynamic route according to root path.
+- Perform markdown searching and generate correct dynamic routes according to root path.
 
 - Support for specifying additional static routes.
 
