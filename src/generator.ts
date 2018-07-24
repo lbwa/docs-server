@@ -25,8 +25,6 @@ class Gen {
       console.error(err)
     }
 
-    if (process.env.NODE_ENV === 'production') return
-
     fs.writeFile(catalogOutput, headMeta, (err: object) => {
       err
         ? console.error(err)

@@ -2,7 +2,11 @@
   "name": "docs-server",
   "version": "0.1.0",
   "description": "A server which is used to build a microserver for docs system",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lbwa/jsonp.git"
@@ -16,7 +20,9 @@
     "dev": "yarn run ts && yarn run server",
     "commit": "git add . && git-cz",
     "clean": "rm -vrf dist/*",
-    "test": "yarn run ts && cross-env NODE_ENV=test npx mocha test/http.spec.js --exit"
+    "test": "yarn run ts && cross-env NODE_ENV=test npx mocha test/http.spec.js --exit",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "release": "sh scripts/release.sh"
   },
   "dependencies": {
     "front-matter": "^2.3.0",
@@ -34,6 +40,7 @@
     "@types/node": "^10.5.2",
     "chai": "^4.1.2",
     "commitizen": "^2.10.1",
+    "conventional-changelog-cli": "^2.0.1",
     "cross-env": "^5.2.0",
     "cz-conventional-changelog": "^2.1.0",
     "istanbul": "^0.4.5",
