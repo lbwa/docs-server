@@ -15,6 +15,7 @@ class Gen {
     this.contentList = {}
   }
 
+  // extract function named `activate` for getting a Promise object
   async activate ({ cwd, catalogOutput }: targetPath) {
     let headMeta: string
 

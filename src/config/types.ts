@@ -32,6 +32,13 @@ export interface targetPath {
   catalogOutput: string
 }
 
+export  interface appOptions {
+  cwd?: string
+  catalogOutput?: string
+  port?: number | string
+  directory?: string
+}
+
 export interface server {
   customHeaders?: resHeaders
   threshold?: number
