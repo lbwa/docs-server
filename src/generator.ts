@@ -7,7 +7,7 @@ const readMeta = require('front-matter')
 const formatDate = require('./utils/format-date')
 
 class Gen {
-  // contentList is used to be all content storage
+  // contentList is used to be a storage for all docs
   contentList: contentList
 
   constructor () {
@@ -63,14 +63,10 @@ class Gen {
       const tags = header.tags
 
       // * optional: filter origin string
-      const removeShortDate = origin.replace(/\/{0}(\d{6}-)+/g, '')
-      const removeInitialYear = removeShortDate.replace(/^\d{4}/, '')
-      const removeRepeat = removeInitialYear.replace(/^\/\S+\//, '')
-      const removeExtension = removeRepeat.replace(/\.md$/, '')
 
       const catalogItem = {
         errno: 0,
-        to: removeExtension,
+        to: origin,
         title,
         author,
         date,
@@ -81,7 +77,7 @@ class Gen {
 
       // generate content list, saved by object
       const body: string = raw.body
-      const to: string =  removeExtension
+      const to: string =  origin
 
       // * single content structure
       this.contentList[to] = {
