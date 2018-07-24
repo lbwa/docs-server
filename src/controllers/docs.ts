@@ -15,6 +15,6 @@ module.exports = async (ctx: Koa.Context, next: Function) => {
   ctx.status = 200
   ctx.body = stringify(contentList[path])
   ctx.set({
-    'Content-Type': 'application/json, charset=utf-8'
+    'Content-Type': 'application/json; charset=utf-8'
   })
 }

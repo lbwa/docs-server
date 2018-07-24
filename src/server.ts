@@ -4,10 +4,11 @@ import { resHeaders, server } from './config/types'
 
 const router = require('./routers/index')
 const { stringify } = require('./utils/index')
+const isTest = process.env.NODE_ENV === 'test'
 
 async function ioMiddleware (ctx: Koa.Context, next: Function) {
   try {
-    console.log('Request path :', ctx.path)
+    if (!isTest) console.log('Request path :', ctx.path)
     const START = process.hrtime()
     await next ()
     const PERIOD = process.hrtime(START)
@@ -21,12 +22,13 @@ async function ioMiddleware (ctx: Koa.Context, next: Function) {
     })
   } catch (err) {
     console.error(err)
+    ctx.status = 500
     ctx.body = stringify({
       errno: 1,
       message: `[Internal error]: ${err.message}`
     })
     ctx.set({
-      'content-type': 'application/json, charset=utf-8'
+      'content-type': 'application/json; charset=utf-8'
     })
   }
 }

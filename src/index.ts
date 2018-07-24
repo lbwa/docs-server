@@ -10,24 +10,23 @@ function resolve (dir: string): string {
 
 class Application {
   options: appOptions
+  close: Function // http.Server -> server.close
 
   constructor (
     {
       cwd = resolve('/'),
       catalogOutput = resolve('/menu.json'),
-      port = '8800',
-      directory = 'doc'
+      port = '8800'
     }: appOptions = {}
   ) {
     this.options = {
       cwd,
       catalogOutput,
-      port,
-      directory
+      port
     }
 
     this.activateGenerator(cwd, catalogOutput)
-      .then(this.activateServer)
+      .then(this.activateServer.bind(this))
       .catch(this.handleError)
   }
 
@@ -39,12 +38,14 @@ class Application {
   }
 
   // ! Notice: Make sure `this` value equal to Application instance
-  activateServer = () => {
+  activateServer () {
     const port = this.options.port
     const server = new Server()
     server.listen(port, () => {
       console.log(`\nServer is listening on http://localhost:${port}\n`)
     })
+
+    return server
   }
 
   handleError (err: Error) {
