@@ -13,7 +13,7 @@
   },
   "author": "Bowen <mr_lbw@outlook.com>",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "scripts": {
     "ts": "npx tsc",
     "server": "node dist/index",

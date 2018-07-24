@@ -140,7 +140,7 @@ class Gen {
     // `target` just like 'do/sample/.../sample.md'
     return new Promise((resolve, reject) => {
       fs.readFile(
-        path.resolve(__dirname, `../${target}`),
+        path.resolve(process.cwd(), `./${target}`),
         'utf8',
         (err: Error, contentData: string) => {
           err ? reject(err) : resolve({origin: target, contentData})
