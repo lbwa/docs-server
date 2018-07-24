@@ -63,10 +63,11 @@ class Gen {
       const tags = header.tags
 
       // * optional: filter origin string
+      const removeExtension = origin.replace(/\.md$/, '')
 
       const catalogItem = {
         errno: 0,
-        to: origin,
+        to: removeExtension,
         title,
         author,
         date,
@@ -77,7 +78,7 @@ class Gen {
 
       // generate content list, saved by object
       const body: string = raw.body
-      const to: string =  origin
+      const to: string =  removeExtension
 
       // * single content structure
       this.contentList[to] = {
