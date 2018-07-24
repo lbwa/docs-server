@@ -1,4 +1,4 @@
-# Docs-server
+# Docs-server [![npm](https://img.shields.io/npm/v/docs-server.svg)](https://www.npmjs.com/package/docs-server)
 
 > A server which is used to build a microserver for docs system.
 
