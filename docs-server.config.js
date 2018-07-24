@@ -4,7 +4,7 @@ const resolve = require('path').resolve
 module.exports = {
   // documents directory
   // based on root path
-  docsPath: 'sample',
+  docsPath: 'doc',
 
   // extra static file route
   routes: [

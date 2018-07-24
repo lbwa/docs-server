@@ -46,7 +46,7 @@ describe('Build docs server', () => {
   })
 
   it('Sample page', done => {
-    createRequest('/sample/sample', res => {
+    createRequest('/doc/sample', res => {
       const data = parse(res)
       expect(data.errno).to.be.equal(0)
       expect(data).to.has.property('to')
