@@ -1,3 +1,13 @@
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/lbwa/docs-server/compare/v0.1.2...v0.2.0) (2018-07-24)
+
+
+### Features
+
+* **generator:** remove file extension from file routes ([1d541d8](https://github.com/lbwa/docs-server/commit/1d541d8))
+
+
+
 <a name="0.1.2"></a>
 ## [0.1.2](https://github.com/lbwa/docs-server/compare/v0.1.1...v0.1.2) (2018-07-24)
 
