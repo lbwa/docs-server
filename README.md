@@ -1,4 +1,4 @@
-# Docs-server [![npm](https://img.shields.io/npm/v/docs-server.svg)](https://www.npmjs.com/package/docs-server)
+# Docs-server [![npm](https://img.shields.io/npm/v/docs-server.svg)](https://www.npmjs.com/package/docs-server) [![CircleCI](https://circleci.com/gh/lbwa/docs-server.svg?style=svg)](https://circleci.com/gh/lbwa/docs-server)
 
 > A server which is used to build a kind of microservices for docs system.
 
