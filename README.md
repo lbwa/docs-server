@@ -82,3 +82,7 @@ const app = new DocsServer({
   port: '3000'
 })
 ```
+
+## CHANGELOG
+
+[CHANGELOG](./CHANGELOG.md)
