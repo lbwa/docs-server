@@ -8,6 +8,7 @@ function resolve (dir: string): string {
   return join(process.cwd(), dir)
 }
 
+// TODO: redesign API
 class Application {
   options: appOptions
   close: Function // http.Server -> server.close

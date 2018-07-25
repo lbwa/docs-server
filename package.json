@@ -1,7 +1,7 @@
 {
   "name": "docs-server",
   "version": "0.2.0",
-  "description": "A server which is used to build a microserver for docs system",
+  "description": "A server which is used to build one of microservices for docs system",
   "main": "dist/index.js",
   "files": [
     "dist",
@@ -59,6 +59,13 @@
   "keywords": [
     "docs-server",
     "blog",
-    "koa"
-  ]
+    "koa",
+    "documentation",
+    "server",
+    "docs",
+    "files"
+  ],
+  "engines": {
+    "node": ">=7.5.0"
+  }
 }
