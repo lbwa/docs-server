@@ -5,7 +5,7 @@ const { stringify } = require('../utils/index')
 module.exports = async (ctx: Koa.Context, next: Function) => {
   // extract id params
   const path = ctx.path.replace(/^\//, '')
-  const contentList = gen.contentList
+  const contentList = gen.contentList // sync with gen.contentList, same object
 
   if (!contentList[path]) {
     await next()

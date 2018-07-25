@@ -1,4 +1,6 @@
 import { appOptions } from './config/types'
+import Gen from './generator'
+import http = require('http')
 
 const Server = require('./server')
 const gen = require('./generator')
@@ -8,10 +10,10 @@ function resolve (dir: string): string {
   return join(process.cwd(), dir)
 }
 
-// TODO: redesign API
 class Application {
   options: appOptions
-  close: Function // http.Server -> server.close
+  server: http.Server // http.Server -> server.close
+  gen: Gen
 
   constructor (
     {
@@ -25,10 +27,26 @@ class Application {
       catalogOutput,
       port
     }
+    this.activate()
+    // this.server has a value, this.gen is undefined on this position
+  }
 
-    this.activateGenerator(cwd, catalogOutput)
-      .then(this.activateServer.bind(this))
-      .catch(this.handleError)
+  async activate () {
+    const options = this.options
+
+    // To expose this.server when Application instantiation
+    // Make sure this.activateServer() before this.activateGenerator()
+    // Router's docs controller sync with gen.contentList
+    this.server = this.activateServer()
+
+    /**
+     * 1. this.activeGenerator will be invoked immediately
+     * 2. async function will be restore execution (enter microtask queue)
+     * until Application complete instantiation which means current event loop
+     * completed.
+     * 3. this.gen is valid until microtask complete
+     */
+    this.gen = await this.activateGenerator(options.cwd, options.catalogOutput)
   }
 
   activateGenerator (cwd: string, catalogOutput: string) {
@@ -42,11 +60,9 @@ class Application {
   activateServer () {
     const port = this.options.port
     const server = new Server()
-    server.listen(port, () => {
+    return server.listen(port, () => {
       console.log(`\nServer is listening on http://localhost:${port}\n`)
     })
-
-    return server
   }
 
   handleError (err: Error) {

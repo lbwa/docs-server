@@ -28,8 +28,10 @@ class Gen {
     fs.writeFile(catalogOutput, headMeta, (err: object) => {
       err
         ? console.error(err)
-        : console.log(`\n 👌  generate menu successfully in ${catalogOutput} ! \n`)
+        : console.log(`\n👌  generate menu successfully in ${catalogOutput} ! \n`)
     })
+
+    return this
   }
 
   async parser (path: string) {
@@ -150,3 +152,6 @@ class Gen {
 const gen = new Gen()
 
 module.exports = gen
+
+// Only for types
+export default Gen
