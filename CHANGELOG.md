@@ -1,3 +1,13 @@
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/lbwa/docs-server/compare/v0.2.0...v0.3.0) (2018-07-25)
+
+
+### Features
+
+* **Application:** expose application.server and application.gen ([08a0c45](https://github.com/lbwa/docs-server/commit/08a0c45))
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/lbwa/docs-server/compare/v0.1.2...v0.2.0) (2018-07-24)
 
