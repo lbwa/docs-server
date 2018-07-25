@@ -20,7 +20,7 @@
     "dev": "yarn run ts && yarn run server",
     "commit": "git add . && git-cz",
     "clean": "rm -vrf dist/*",
-    "test": "yarn run ts && cross-env NODE_ENV=test npx mocha test/http.spec.js --exit",
+    "test": "yarn ts && cross-env NODE_ENV=test npx mocha test/http.spec.js",
     "changelog": "npx conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "release": "sh scripts/release.sh"
   },

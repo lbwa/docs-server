@@ -1,4 +1,6 @@
-const DocsServer = require('../dist/index')
+const Server = require('../dist/server')
+const gen = require('../dist/generator')
+const join = require('path').join
 const { expect } = require('chai')
 const http = require('http')
 
@@ -27,13 +29,34 @@ function createRequest (url, fn, method='GET', statusCode=200) {
     .end()
 }
 
+function resolve (dir) {
+  return join(process.cwd(), dir)
+}
+
 describe('Build docs server', () => {
   let app
+  let start
   before (done => {
-    app = new DocsServer({
-      port: PORT
+    start = process.hrtime()
+    gen
+      .activate({
+        cwd: resolve('/'),
+        catalogOutput: resolve('/menu.json')
+      })
+      .then(() => {
+        const server = new Server()
+        app = server.listen(PORT, () => {
+          console.log(`\nServer is listening on http://localhost:${PORT}\n`)
+          done()
+        })
+      })
+  })
+
+  after(done => {
+    app.close(() => {
+      done()
     })
-    done()
+    console.log(process.hrtime(start))
   })
 
   it('Root', done => {
@@ -57,5 +80,13 @@ describe('Build docs server', () => {
       expect(data).to.has.property('data')
       done()
     })
+  })
+
+  it('Handle error', done => {
+    createRequest('/something', res => {
+      const data = parse(res)
+      expect(data.errno).to.be.equal(1)
+      done()
+    }, 'GET', 404)
   })
 })
