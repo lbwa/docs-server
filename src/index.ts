@@ -51,8 +51,8 @@ class Application {
 
     /**
      * 1. async function wouldn't restore execution (enter microtask queue)
-     * until Application complete instantiation which means current event loop
-     * completed.
+     * until Application complete instantiation which means current all of
+     * mission in the (macro-)task queue has been completed
      * 2. this.gen is invalid until Application complete this own initialization
      */
     this.gen = await this.genPromise
