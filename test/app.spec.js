@@ -53,23 +53,13 @@ describe('TEST: Application', () => {
     // app.genPromise must be resolved before testing
     app.genPromise.then(() => {
       request(app.server)
-      .get('/doc/sample')
-      .expect(200, {
-        errno: 0,
-        to: "doc/sample",
-        title: "Hello world",
-        author: "Bowen",
-        date: "2018 AUG 01",
-        tags: [
-        "Javascript",
-        "Typescript"
-        ],
-        data: "\r\nThis is content of posts.\r\n"
-      })
-      .end((err, res) => {
-        if (err) throw err
-        done()
-      })
+        .get('/doc/sample')
+        .expect(200)
+        .end((err, res) => {
+          if (err) throw err
+          if (res.body.errno !== 0) throw new Error('[Error]: errno doesn\'t equal 0 !')
+          done()
+        })
     })
   })
 })
