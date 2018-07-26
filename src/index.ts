@@ -50,7 +50,7 @@ class Application {
     this.genPromise = this.activateGenerator(options.cwd, options.catalogOutput)
 
     /**
-     * 1. async function will be restore execution (enter microtask queue)
+     * 1. async function wouldn't restore execution (enter microtask queue)
      * until Application complete instantiation which means current event loop
      * completed.
      * 2. this.gen is invalid until Application complete this own initialization
