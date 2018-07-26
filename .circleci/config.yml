@@ -29,9 +29,6 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
-          name: Compile typescript
-          command: yarn run ts
-
-      - run:
           name: Run test
+          # including compiling typescirpt
           command: yarn run test
