@@ -44,7 +44,7 @@ class Application {
      * 2. async function will be restore execution (enter microtask queue)
      * until Application complete instantiation which means current event loop
      * completed.
-     * 3. this.gen is valid until microtask complete
+     * 3. this.gen is valid after microtask complete
      */
     this.gen = await this.activateGenerator(options.cwd, options.catalogOutput)
   }
