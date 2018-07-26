@@ -13,6 +13,7 @@ function resolve (dir: string): string {
 class Application {
   options: appOptions
   server: http.Server // http.Server -> server.close
+  genPromise: Promise<Gen>
   gen: Gen
 
   constructor (
@@ -28,25 +29,33 @@ class Application {
       port
     }
     this.activate()
-    // this.server has a value, this.gen is undefined on this position
+    // this.server is a http.Server instance,
+    // this.gen is a Promise{<pending>},
+    // this.gen is invalid on this position
   }
 
   async activate () {
     const options = this.options
 
     // To expose this.server when Application instantiation
-    // Make sure this.activateServer() before this.activateGenerator()
-    // Router's docs controller sync with gen.contentList
+    // To build server as soon as possible
+    // Make sure this.activateServer() is before this.activateGenerator()
+    // Router's docs controller always sync with gen.contentList
     this.server = this.activateServer()
 
     /**
      * 1. this.activeGenerator will be invoked immediately
-     * 2. async function will be restore execution (enter microtask queue)
+     * 2. this.gen must be pending status promise when instantiation completed
+     */
+    this.genPromise = this.activateGenerator(options.cwd, options.catalogOutput)
+
+    /**
+     * 1. async function will be restore execution (enter microtask queue)
      * until Application complete instantiation which means current event loop
      * completed.
-     * 3. this.gen is valid after microtask complete
+     * 2. this.gen is invalid until Application complete this own initialization
      */
-    this.gen = await this.activateGenerator(options.cwd, options.catalogOutput)
+    this.gen = await this.genPromise
   }
 
   activateGenerator (cwd: string, catalogOutput: string) {
@@ -63,10 +72,6 @@ class Application {
     return server.listen(port, () => {
       console.log(`\nServer is listening on http://localhost:${port}\n`)
     })
-  }
-
-  handleError (err: Error) {
-    console.error(err)
   }
 }
 
