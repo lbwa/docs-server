@@ -25,7 +25,12 @@ class Application {
     }: appOptions = {}
   ) {
     if (!(this instanceof Application)) {
-      return new Application()
+      return new Application({
+        cwd,
+        dest,
+        port,
+        extra
+      })
     }
 
     this.options = {
