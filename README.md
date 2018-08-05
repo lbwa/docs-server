@@ -22,19 +22,13 @@ npm i docs-server
 
 ## Usage
 
-- Simple running
+- Easy running
 
 ```js
 const DocsServer = require('docs-server')
 
 // It should be running at http://localhost:8800 by default
 const app = new DocsServer()
-```
-
-or
-
-```js
-const DocsServer = require('docs-server')()
 ```
 
 - ( Optional ) You can specify your custom configuration.
