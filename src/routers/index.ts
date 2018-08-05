@@ -29,7 +29,7 @@ function createRoutes (
   for (let route of docsRoutes) {
     const formatRoute = /^\//.test(route) ? route : `/${route}`
     router.get(formatRoute, docs)
-    logger.info(`[Server]`, `Generate route: ${route}`)
+    logger.info(`[Server]`, `Generate route: ${formatRoute}`)
   }
 
   // Make sure createMenuRoute before createExtraRoutes

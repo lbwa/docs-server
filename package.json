@@ -25,6 +25,7 @@
     "release": "sh scripts/release.sh"
   },
   "dependencies": {
+    "chalk": "^2.4.1",
     "front-matter": "^2.3.0",
     "glob": "^7.1.2",
     "koa": "^2.5.2",
