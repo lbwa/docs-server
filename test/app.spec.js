@@ -73,6 +73,17 @@ describe('TEST: Application', () => {
       })
   })
 
+  it('GET: menu.json', done => {
+    request(app.server)
+      .get('/menu')
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err
+        if (res.body[0].errno !== 0) throw new Error('[Error]: errno doesn\'t equal 0 !')
+        done()
+      })
+  })
+
   it('GET: extra static resources routes', done => {
     request(app.server)
       .get('/test')

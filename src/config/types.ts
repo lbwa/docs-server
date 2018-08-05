@@ -47,6 +47,7 @@ export interface server {
   threshold?: number
   contentList?: contentList
   extra?: extraRoute[]
+  dest?: string
 }
 
 export interface extraRoute {

@@ -56,12 +56,18 @@ function setResHeaders (customHeader: resHeaders) {
  */
 class Server extends Koa {
   // Once params is empty object, customHeaders and threshold will be set default value
-  constructor ({ customHeaders={}, threshold=1, contentList = {}, extra = [] }: server = {}) {
+  constructor ({
+    customHeaders={},
+    threshold=1,
+    contentList = {},
+    extra = [],
+    dest = './menu.json'
+  }: server = {}) {
     super()
     this.setIOMiddleware()
     this.setResHeaders(customHeaders)
     this.setGzip(threshold)
-    this.setRouter(contentList, extra)
+    this.setRouter(contentList, extra, dest)
   }
 
   setIOMiddleware () {
@@ -78,8 +84,12 @@ class Server extends Koa {
     }))
   }
 
-  setRouter (contentList: server['contentList'], extra: server['extra']) {
-    const router = createRouter(contentList, extra)
+  setRouter (
+    contentList: server['contentList'],
+    extra: server['extra'],
+    dest: server['dest']
+  ) {
+    const router = createRouter(contentList, extra, dest)
     this.use(router.routes())
     this.use(router.allowedMethods())
   }

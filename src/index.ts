@@ -73,7 +73,11 @@ class Application {
     this.gen = await this.genPromise
 
     // Doesn't be invoked until generator complete mission
-    this.server = this.activateServer(this.gen.contentList, this.options.extra)
+    this.server = this.activateServer(
+      this.gen.contentList,
+      options.extra,
+      options.dest
+    )
   }
 
   /**
@@ -100,11 +104,12 @@ class Application {
    * @returns {http.Server} http.Server instance
    * @memberof Application
    */
-  activateServer (contentList: Gen['contentList'], extra: extraRoute[]):http.Server {
+  activateServer (contentList: Gen['contentList'], extra: extraRoute[], dest: string):http.Server {
     const port = this.options.port
     const server = new Server({
       contentList,
-      extra
+      extra,
+      dest
     })
     return server.listen(port, () => {
       console.log(`\nServer is listening on http://localhost:${port}\n`)

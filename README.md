@@ -35,10 +35,10 @@ const DocsServer = require('docs-server')
 
 // Notice: all options is optional
 const app = new DocsServer({
-  // current working directory, and it should be a absolute path.
+  // should be nodejs current working directory
   cwd: resolve('./'),
 
-  // the output absolute path of catalog files
+  // the output path of catalog files (based on current working directory)
   dest: resolve('./menu.json'),
 
   // your server running port
