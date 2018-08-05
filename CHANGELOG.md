@@ -1,3 +1,33 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/lbwa/docs-server/compare/v0.3.0...v1.0.0) (2018-08-05)
+
+
+### Bug Fixes
+
+* restore menu.json route ([1c33b79](https://github.com/lbwa/docs-server/commit/1c33b79))
+
+
+### Code Refactoring
+
+* **app architecture:** adjust server process to support multiple-level directory ([7473241](https://github.com/lbwa/docs-server/commit/7473241))
+
+
+### Features
+
+* **Application:** add params for `require('docs-server')()` syntax ([0980491](https://github.com/lbwa/docs-server/commit/0980491))
+* **Application:** expose application.genPromise for listening Promise<Gen> ([bab1b64](https://github.com/lbwa/docs-server/commit/bab1b64))
+* **Application:** support `const app = require('docs-server')()` ([42bd08c](https://github.com/lbwa/docs-server/commit/42bd08c))
+* support specified extra routes by instantiation ([d890352](https://github.com/lbwa/docs-server/commit/d890352))
+
+
+### BREAKING CHANGES
+
+* no longer support docs-server.config.js to specified extra routes, and replaced by
+extra options
+* **app architecture:** support multiple-level directory, rename catalogOutput, remove docsPath
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/lbwa/docs-server/compare/v0.2.0...v0.3.0) (2018-07-25)
 
