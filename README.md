@@ -4,32 +4,15 @@
 
 ## Feature
 
-- Perform markdown searching and generate correct dynamic routes according to root path.
+- Perform automatic markdown searching and generate correct dynamic routes according to the root path of your project.
 
-- Support for specifying additional static routes.
+- Support multiple-level documentation routes.
 
-## Notice
-
-Only support second-level directory temporarily.
-
-Your project structure should be like this:
-
-```markdown
-├── doc [custom directory name]
-|    ├── a.md
-|    ├── b.md
-|    ├── c.md
-|    └── d.md
-|
-├── docs-server.config.js [define your custom config]
-|
-├── something.json [additional static route]
-|
-...
-└── package.json
-```
+- Support for specifying additional static resources routes.
 
 ## Usage
+
+- Simple running
 
 ```js
 const DocsServer = require('docs-server')
@@ -38,49 +21,47 @@ const DocsServer = require('docs-server')
 const app = new DocsServer()
 ```
 
-3. ( Optional ) You can specify output path of catalog file ( menu.json ) and server port.
+or
 
 ```js
-const app = new DocsServer({
-  dest: path.resolve(__dirname, './')
-  port: '3000'
-})
+const DocsServer = require('docs-server')()
 ```
 
-```powershell
-# test your server
-curl -v http://localhost:3000  # response from /
-curl -v http://localhost:3000/doc/sample # response from /doc/sample
-```
-
-- (Optional) You can specify your own static resource routes
+- ( Optional ) You can specify your custom configuration.
 
 ```js
-// docs-server.config.js
-const send = require('koa-send')
 const resolve = require('path').resolve
+const DocsServer = require('docs-server')
 
-module.exports = {
-  routes: [
+// Notice: all options is optional
+const app = new DocsServer({
+  // current working directory, and it should be a absolute path.
+  cwd: resolve('./'),
+
+  // the output absolute path of catalog files
+  dest: resolve('./menu.json'),
+
+  // your server running port
+  port: '8800',
+
+  // extra static resource routes
+  extra: [
     {
-      path: 'menu',
-      callback: async (ctx: Koa.Context, next: Function) => {
-        await send(ctx, './menu.json', {
-          root: resolve(__dirname, '../../')
-        })
-      }
-    },
-    // extra static file route (optional)
-    {
-      path: 'something',
-      callback: async (ctx, next) => {
-        await send(ctx, './something.json', {
-          root: resolve(__dirname, './')
-        })
+      route: '/test', // eg. http://locahost:8800/test
+      middleware: async (ctx, next) => {
+        // do something
       }
     }
   ]
-}
+})
+```
+
+- Test you building
+
+```powershell
+# test your server
+curl -v http://localhost:8800  # response from /
+curl -v http://localhost:8800/doc/sample # response from /doc/sample
 ```
 
 ## CHANGELOG
