@@ -24,6 +24,10 @@ class Application {
       extra = {}
     }: appOptions = {}
   ) {
+    if (!(this instanceof Application)) {
+      return new Application()
+    }
+
     this.options = {
       cwd,
       dest,
