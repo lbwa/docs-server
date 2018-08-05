@@ -14,6 +14,14 @@ describe('TEST: Application', () => {
               errno: 0,
               msg: 'test route'
             })
+            /**
+             * Don't miss setting response header, otherwise response MIME type
+             * is text/plain that will cause supertest get a empty object
+             * rather than a correct object
+             */
+            ctx.set({
+              'Content-Type': 'application/json; charset=utf-8'
+            })
           }
         }
       ]
@@ -61,16 +69,16 @@ describe('TEST: Application', () => {
       })
   })
 
-  // it('GET: extra static resources routes', done => {
-  //   request(app.server)
-  //     .get('/test')
-  //     .expect(200)
-  //     .end((err, res) => {
-  //       if (err) throw err
-  //       if (res.body.errno !== 0) throw new Error('[Error]: errno doesn\'t equal 0 !')
-  //       done()
-  //     })
-  // })
+  it('GET: extra static resources routes', done => {
+    request(app.server)
+      .get('/test')
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err
+        if (res.body.errno !== 0) throw new Error('[Error]: errno doesn\'t equal 0 !')
+        done()
+      })
+  })
 
   it('Handle url error', done => {
     request(app.server)
