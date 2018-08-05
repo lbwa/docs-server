@@ -60,7 +60,7 @@ const app = new DocsServer({
 })
 ```
 
-- Test you building
+- Test your building
 
 ```powershell
 # test your server
