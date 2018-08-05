@@ -17,8 +17,8 @@ function resolve (dir: string): string {
 
 /**
  * @class Application
- * @param {String} cwd project root path(current working directory)
- * @param {String} dest the output path of menu.json
+ * @param {String} cwd current working directory(should be a absolute path)
+ * @param {String} dest the output path of menu.json(should be a absolute path)
  * @param {String} port server port
  * @param {extraRoute[]} extra extra static resources routes
  */
@@ -30,24 +30,24 @@ class Application {
 
   constructor (
     {
-      cwd = '/',
-      dest = '/menu.json',
+      cwd = resolve('/'),
+      dest = resolve('/menu.json'),
       port = '8800',
       extra = []
     }: appOptions = {}
   ) {
     if (!(this instanceof Application)) {
       return new Application({
-        cwd: resolve(cwd),
-        dest: resolve(dest),
+        cwd,
+        dest,
         port,
         extra
       })
     }
 
     this.options = {
-      cwd: resolve(cwd),
-      dest: resolve(dest),
+      cwd,
+      dest,
       port,
       extra
     }

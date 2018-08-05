@@ -1,12 +1,13 @@
 const request = require('supertest')
+const resolve = require('path').resolve
 const App = require('../dist/index')
 
 describe('TEST: Application', () => {
   let app
   before(done => {
     app = new App({
-      cwd: '/',
-      dest: '/menu.json',
+      cwd: resolve(__dirname, '../'),
+      dest: resolve(__dirname, '../menu.json'),
       port: '3000',
       extra: [
         {
