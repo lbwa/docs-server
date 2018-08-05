@@ -1,3 +1,13 @@
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/lbwa/docs-server/compare/v1.0.0...v1.0.1) (2018-08-05)
+
+
+### Bug Fixes
+
+* route generating info ([2503dfa](https://github.com/lbwa/docs-server/commit/2503dfa))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/lbwa/docs-server/compare/v0.3.0...v1.0.0) (2018-08-05)
 
