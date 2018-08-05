@@ -1,3 +1,13 @@
+<a name="1.0.3"></a>
+## [1.0.3](https://github.com/lbwa/docs-server/compare/v1.0.2...v1.0.3) (2018-08-05)
+
+
+### Bug Fixes
+
+* Don't support `require('docs-server')()` because of `class` rather than `function A() {}` ([c284db9](https://github.com/lbwa/docs-server/commit/c284db9))
+
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/lbwa/docs-server/compare/v1.0.1...v1.0.2) (2018-08-05)
 
