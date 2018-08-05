@@ -1,4 +1,4 @@
-import { appOptions, extraRoutes } from './config/types'
+import { appOptions, extraRoute } from './config/types'
 import Gen from './generator'
 import http = require('http')
 
@@ -6,10 +6,22 @@ const Server = require('./server')
 const gen = require('./generator')
 const join = require('path').join
 
+/**
+ *
+ * @param {string} dir path
+ * @returns {string} path based on current working directory of nodejs process
+ */
 function resolve (dir: string): string {
   return join(process.cwd(), dir)
 }
 
+/**
+ * @class Application
+ * @param {String} cwd project root path(current working directory)
+ * @param {String} dest the output path of menu.json
+ * @param {String} port server port
+ * @param {extraRoute[]} extra extra static resources routes
+ */
 class Application {
   options: appOptions
   server: http.Server // http.Server -> to expose `server.close` function
@@ -18,24 +30,24 @@ class Application {
 
   constructor (
     {
-      cwd = resolve('/'),
-      dest = resolve('/menu.json'),
+      cwd = '/',
+      dest = '/menu.json',
       port = '8800',
-      extra = {}
+      extra = []
     }: appOptions = {}
   ) {
     if (!(this instanceof Application)) {
       return new Application({
-        cwd,
-        dest,
+        cwd: resolve(cwd),
+        dest: resolve(dest),
         port,
         extra
       })
     }
 
     this.options = {
-      cwd,
-      dest,
+      cwd: resolve(cwd),
+      dest: resolve(dest),
       port,
       extra
     }
@@ -64,6 +76,14 @@ class Application {
     this.server = this.activateServer(this.gen.contentList, this.options.extra)
   }
 
+  /**
+   *activate generator
+   *
+   * @param {string} cwd project root path(current working directory)
+   * @param {string} dest the output path of menu.json
+   * @returns {Gen} Generator instance
+   * @memberof Application
+   */
   activateGenerator (cwd: string, dest: string) {
     return gen.activate({
       cwd,
@@ -72,7 +92,15 @@ class Application {
   }
 
   // ! Notice: Make sure `this` value equal to Application instance
-  activateServer (contentList: Gen['contentList'], extra: extraRoutes):http.Server {
+  /**
+   *build local server
+   *
+   * @param {Gen['contentList']} contentList content storage
+   * @param {extraRoute[]} extra extra static resources routes
+   * @returns {http.Server} http.Server instance
+   * @memberof Application
+   */
+  activateServer (contentList: Gen['contentList'], extra: extraRoute[]):http.Server {
     const port = this.options.port
     const server = new Server({
       contentList,

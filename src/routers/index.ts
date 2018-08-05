@@ -1,17 +1,21 @@
 import Router = require('koa-router')
-import { contentList } from '../config/types'
+import { contentList, extraRoute } from '../config/types'
 
 const logger = require('../utils/logger')
-const config = require('../config/index')
 const home = require('../controllers/home')
 const docs = require('../controllers/docs')
 const createErrorHandle = require('../controllers/error')
 
 const router = new Router()
 
-const routes = config.routes
-
-function createRoutes (contentList: contentList) {
+/**
+ *create all routes based on configuration
+ *
+ * @param {contentList} contentList content storage
+ * @param {extraRoute[]} extra extra static resources routes
+ * @returns a koa router instance
+ */
+function createRoutes (contentList: contentList, extra: extraRoute[]) {
   const docsRoutes = Object.keys(contentList)
 
   router.get('/', home)
@@ -24,20 +28,32 @@ function createRoutes (contentList: contentList) {
   }
 
   // static resource route defined by users
-  for (let route of routes) {
-    const format = /^\//.test(route.path) ? route.path : `/${route.path}`
+  for (let extraRoute of extra) {
+    const format = /^\//.test(extraRoute.route)
+       ? extraRoute.route
+       : `/${extraRoute.route}`
     router
-      .get(format, route.callback)
+      .get(format, extraRoute.middleware)
+
+    logger.info(`[Server]`, `Generate route: ${extraRoute.route}`)
   }
   return router
 }
 
-function createRouter (contentList: contentList) {
-  createRoutes(contentList)
+/**
+ *create a koa router instance
+ *
+ * @param {contentList} contentList content storage
+ * @param {extraRoute[]} extra extra static resources routes
+ * @returns a koa router instance
+ */
+module.exports = function createRouter (
+  contentList: contentList,
+  extra: extraRoute[]
+) {
+  createRoutes(contentList, extra)
     .get('*', createErrorHandle(404))
     .all('*', createErrorHandle(405))
 
   return router
 }
-
-module.exports = createRouter

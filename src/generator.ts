@@ -15,7 +15,14 @@ class Gen {
     this.contentList = {}
   }
 
-  // extract function named `activate` for getting a Promise object
+  /**
+   * activate Generator
+   * extract function named `activate` for getting a Promise object
+   *
+   * @param {targetPath} { cwd, dest }working path and output path
+   * @returns generator instance
+   * @memberof Gen
+   */
   async activate ({ cwd, dest }: targetPath) {
     let headMeta: string
 
@@ -34,6 +41,13 @@ class Gen {
     return this
   }
 
+  /**
+   *activate scanner
+   *
+   * @param {string} path working path
+   * @returns {Promise<catalog>}
+   * @memberof Gen
+   */
   async parser (path: string) {
     let catalog: post[] = []
     let docsPromises
@@ -98,6 +112,13 @@ class Gen {
     return JSON.stringify(catalog)
   }
 
+  /**
+   *scan all markdown files in project
+   *
+   * @param {string} cwd the beginning of working path
+   * @returns {Promise<singleDocDate>[]}
+   * @memberof Gen
+   */
   async scanner (cwd: string) {
     let docsPath: string[] = []
 
@@ -123,6 +144,13 @@ class Gen {
     return docsPromises
   }
 
+  /**
+   *generate all path
+   *
+   * @param {string} cwd working path
+   * @returns {Promise<string[]>} a Array instance including all path
+   * @memberof Gen
+   */
   getDocsPath (cwd: string): Promise<string[]> {
     return new Promise((resolve, reject) => {
       glob('*/**/*.md', {
@@ -135,6 +163,13 @@ class Gen {
     })
   }
 
+  /**
+   *read specific file by async
+   *
+   * @param {string} target target file
+   * @returns Promise<err | file data>
+   * @memberof Gen
+   */
   readFile (target: string) {
     // `target` just like 'do/sample/.../sample.md'
     return new Promise((resolve, reject) => {

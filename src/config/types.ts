@@ -1,3 +1,5 @@
+import Koa = require('koa')
+
 export interface resHeaders {
   [key: string]: string
 }
@@ -32,21 +34,22 @@ export interface targetPath {
   dest: string
 }
 
-export  interface appOptions {
+export interface appOptions {
   cwd?: string
   dest?: string
   port?: number | string
   directory?: string
-  extra?: extraRoutes
+  extra?: extraRoute[]
 }
 
 export interface server {
   customHeaders?: resHeaders
   threshold?: number
   contentList?: contentList
+  extra?: extraRoute[]
 }
 
-export interface extraRoutes {
+export interface extraRoute {
   route?: string
-  middleware?: Function
+  middleware?: (ctx: Koa.Context, next: Function) => {}
 }
