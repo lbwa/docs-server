@@ -10,6 +10,16 @@
 
 - Support for specifying additional static resources routes.
 
+## Installing
+
+```bash
+# yarn
+yarn add docs-server
+
+# npm
+npm i docs-server
+```
+
 ## Usage
 
 - Simple running
