@@ -5,6 +5,9 @@ describe('TEST: Application', () => {
   let app
   before(done => {
     app = new App({
+      cwd: '/',
+      dest: '/menu.json',
+      port: '3000',
       extra: [
         {
           route: '/test',
