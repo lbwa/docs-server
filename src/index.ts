@@ -1,4 +1,4 @@
-import { appOptions } from './config/types'
+import { appOptions, extraRoutes } from './config/types'
 import Gen from './generator'
 import http = require('http')
 
@@ -12,42 +12,36 @@ function resolve (dir: string): string {
 
 class Application {
   options: appOptions
-  server: http.Server // http.Server -> server.close
+  server: http.Server // http.Server -> to expose `server.close` function
   genPromise: Promise<Gen>
   gen: Gen
 
   constructor (
     {
       cwd = resolve('/'),
-      catalogOutput = resolve('/menu.json'),
-      port = '8800'
+      dest = resolve('/menu.json'),
+      port = '8800',
+      extra = {}
     }: appOptions = {}
   ) {
     this.options = {
       cwd,
-      catalogOutput,
-      port
+      dest,
+      port,
+      extra
     }
+
     this.activate()
-    // this.server is a http.Server instance,
-    // this.gen is a Promise{<pending>},
-    // this.gen is invalid on this position
   }
 
   async activate () {
     const options = this.options
 
-    // To expose this.server when Application instantiation
-    // To build server as soon as possible
-    // Make sure this.activateServer() is before this.activateGenerator()
-    // Router's docs controller always sync with gen.contentList
-    this.server = this.activateServer()
-
     /**
      * 1. this.activeGenerator will be invoked immediately
      * 2. this.gen must be pending status promise when instantiation completed
      */
-    this.genPromise = this.activateGenerator(options.cwd, options.catalogOutput)
+    this.genPromise = this.activateGenerator(options.cwd, options.dest)
 
     /**
      * 1. async function wouldn't restore execution (enter microtask queue)
@@ -56,19 +50,25 @@ class Application {
      * 2. this.gen is invalid until Application complete this own initialization
      */
     this.gen = await this.genPromise
+
+    // Doesn't be invoked until generator complete mission
+    this.server = this.activateServer(this.gen.contentList, this.options.extra)
   }
 
-  activateGenerator (cwd: string, catalogOutput: string) {
+  activateGenerator (cwd: string, dest: string) {
     return gen.activate({
       cwd,
-      catalogOutput
+      dest
     })
   }
 
   // ! Notice: Make sure `this` value equal to Application instance
-  activateServer () {
+  activateServer (contentList: Gen['contentList'], extra: extraRoutes):http.Server {
     const port = this.options.port
-    const server = new Server()
+    const server = new Server({
+      contentList,
+      extra
+    })
     return server.listen(port, () => {
       console.log(`\nServer is listening on http://localhost:${port}\n`)
     })

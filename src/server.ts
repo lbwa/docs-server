@@ -2,7 +2,7 @@ import Koa = require('koa')
 import compress = require('koa-compress')
 import { resHeaders, server } from './config/types'
 
-const router = require('./routers/index')
+const createRouter = require('./routers/index')
 const { stringify } = require('./utils/index')
 const isTest = process.env.NODE_ENV === 'test'
 
@@ -50,12 +50,12 @@ function setResHeaders (customHeader: resHeaders) {
 
 class Server extends Koa {
   // Once params is empty object, customHeaders and threshold will be set default value
-  constructor ({ customHeaders={}, threshold=1 }: server = {}) {
+  constructor ({ customHeaders={}, threshold=1, contentList = {} }: server = {}) {
     super()
     this.setIOMiddleware()
     this.setResHeaders(customHeaders)
     this.setGzip(threshold)
-    this.setRouter()
+    this.setRouter(contentList)
   }
 
   setIOMiddleware () {
@@ -72,7 +72,8 @@ class Server extends Koa {
     }))
   }
 
-  setRouter () {
+  setRouter (contentList: server['contentList']) {
+    const router = createRouter(contentList)
     this.use(router.routes())
     this.use(router.allowedMethods())
   }

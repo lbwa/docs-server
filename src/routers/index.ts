@@ -1,27 +1,43 @@
 import Router = require('koa-router')
+import { contentList } from '../config/types'
 
+const logger = require('../utils/logger')
 const config = require('../config/index')
 const home = require('../controllers/home')
 const docs = require('../controllers/docs')
-const error = require('../controllers/error')
+const createErrorHandle = require('../controllers/error')
 
 const router = new Router()
 
 const routes = config.routes
-const docsPath = config.docsPath
 
-router
-  .get('/', home)
+function createRoutes (contentList: contentList) {
+  const docsRoutes = Object.keys(contentList)
 
-for (let route of routes) {
-  const format = /^\//.test(route.path) ? route.path : `/${route.path}`
-  router
-    .get(format, route.callback)
+  router.get('/', home)
+
+  for (let route of docsRoutes) {
+    // doc/sample --> /doc/sample
+    const formatRoute = /^\//.test(route) ? route : `/${route}`
+    router.get(formatRoute, docs)
+    logger.info(`[Server]`, `Generate route: ${route}`)
+  }
+
+  // static resource route defined by users
+  for (let route of routes) {
+    const format = /^\//.test(route.path) ? route.path : `/${route.path}`
+    router
+      .get(format, route.callback)
+  }
+  return router
 }
 
-router
-  // only file name
-  .get(`/${docsPath}/:id`, docs)
-  .get('*', error)
+function createRouter (contentList: contentList) {
+  createRoutes(contentList)
+    .get('*', createErrorHandle(404))
+    .all('*', createErrorHandle(405))
 
-module.exports = router
+  return router
+}
+
+module.exports = createRouter

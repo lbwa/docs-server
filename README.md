@@ -31,42 +31,6 @@ Your project structure should be like this:
 
 ## Usage
 
-1. You should specify your documents directory.
-
-```js
-// docs-server.config.js
-const send = require('koa-send')
-const resolve = require('path').resolve
-
-module.exports = {
-  // documents directory (required)
-  // based on root path
-  docsPath: 'doc',
-
-  // extra static file route (optional)
-  routes: [
-    {
-      path: 'menu',
-      callback: async (ctx, next) => {
-        await send(ctx, './menu.json', {
-          root: resolve(__dirname, './')
-        })
-      }
-    },
-    {
-      path: 'something',
-      callback: async (ctx, next) => {
-        await send(ctx, './something.json', {
-          root: resolve(__dirname, './')
-        })
-      }
-    }
-  ]
-}
-```
-
-2. Import module and run it
-
 ```js
 const DocsServer = require('docs-server')
 
@@ -78,9 +42,45 @@ const app = new DocsServer()
 
 ```js
 const app = new DocsServer({
-  catalogOutput: path.resolve(__dirname, './')
+  dest: path.resolve(__dirname, './')
   port: '3000'
 })
+```
+
+```powershell
+# test your server
+curl -v http://localhost:3000  # response from /
+curl -v http://localhost:3000/doc/sample # response from /doc/sample
+```
+
+- (Optional) You can specify your own static resource routes
+
+```js
+// docs-server.config.js
+const send = require('koa-send')
+const resolve = require('path').resolve
+
+module.exports = {
+  routes: [
+    {
+      path: 'menu',
+      callback: async (ctx: Koa.Context, next: Function) => {
+        await send(ctx, './menu.json', {
+          root: resolve(__dirname, '../../')
+        })
+      }
+    },
+    // extra static file route (optional)
+    {
+      path: 'something',
+      callback: async (ctx, next) => {
+        await send(ctx, './something.json', {
+          root: resolve(__dirname, './')
+        })
+      }
+    }
+  ]
+}
 ```
 
 ## CHANGELOG

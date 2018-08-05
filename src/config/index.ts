@@ -6,9 +6,6 @@ const customConfig = require(resolve(process.cwd(), 'docs-server.config.js'))
 const send = require('koa-send')
 
 const baseConfig = {
-  // documents directory
-  docsPath: 'doc',
-
   // extra static file route
   routes: [
     {

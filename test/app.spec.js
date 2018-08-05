@@ -5,13 +5,47 @@ describe('TEST: Application', () => {
   let app
   before(done => {
     app = new App()
-    Promise.resolve(app)
-      .then(() => done())
+
+    app.genPromise.then(() => done())
   })
 
   after(done => {
     Promise.resolve(app.server.close())
       .then(() => done())
+  })
+
+  it('GET: Home', done => {
+    request(app.server)
+      .get('/')
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err
+        done()
+      })
+  })
+
+  // Make sure this function invoked after generator complete mission,
+  // otherwise gen.contentList is empty storage
+  it('GET: doc/sample', done => {
+    request(app.server)
+      .get('/doc/sample')
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err
+        if (res.body.errno !== 0) throw new Error('[Error]: errno doesn\'t equal 0 !')
+        done()
+      })
+  })
+
+  it('GET: doc/nest/sample', done => {
+    request(app.server)
+      .get('/doc/nest/sample')
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err
+        if (res.body.errno !== 0) throw new Error('[Error]: errno doesn\'t equal 0 !')
+        done()
+      })
   })
 
   it('Handle url error', done => {
@@ -35,31 +69,5 @@ describe('TEST: Application', () => {
         if (err) throw err
         done()
       })
-  })
-
-  it('GET: Home', done => {
-    request(app.server)
-      .get('/')
-      .expect(200)
-      .end((err, res) => {
-        if (err) throw err
-        done()
-      })
-  })
-
-  // Make sure this function invoked after generator complete mission,
-  // otherwise gen.contentList is empty storage
-  it('GET: doc/sample', done => {
-    // app.genPromise must be resolved before testing
-    app.genPromise.then(() => {
-      request(app.server)
-        .get('/doc/sample')
-        .expect(200)
-        .end((err, res) => {
-          if (err) throw err
-          if (res.body.errno !== 0) throw new Error('[Error]: errno doesn\'t equal 0 !')
-          done()
-        })
-    })
   })
 })

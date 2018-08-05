@@ -16,7 +16,7 @@ class Gen {
   }
 
   // extract function named `activate` for getting a Promise object
-  async activate ({ cwd, catalogOutput }: targetPath) {
+  async activate ({ cwd, dest }: targetPath) {
     let headMeta: string
 
     try {
@@ -25,10 +25,10 @@ class Gen {
       console.error(err)
     }
 
-    fs.writeFile(catalogOutput, headMeta, (err: object) => {
+    fs.writeFile(dest, headMeta, (err: object) => {
       err
         ? console.error(err)
-        : console.log(`\n👌  generate menu successfully in ${catalogOutput} ! \n`)
+        : console.log(`\n👌  generate menu successfully in ${dest} ! \n`)
     })
 
     return this

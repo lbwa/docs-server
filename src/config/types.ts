@@ -29,17 +29,24 @@ export interface contentList {
 
 export interface targetPath {
   cwd: string
-  catalogOutput: string
+  dest: string
 }
 
 export  interface appOptions {
   cwd?: string
-  catalogOutput?: string
+  dest?: string
   port?: number | string
   directory?: string
+  extra?: extraRoutes
 }
 
 export interface server {
   customHeaders?: resHeaders
   threshold?: number
+  contentList?: contentList
+}
+
+export interface extraRoutes {
+  route?: string
+  middleware?: Function
 }
