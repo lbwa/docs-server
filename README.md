@@ -40,10 +40,11 @@ const DocsServer = require('docs-server')
 // Notice: all options is optional
 const app = new DocsServer({
   // should be nodejs current working directory
-  cwd: resolve('./'),
+  // recommend you keep default value (you project root path)
+  cwd: resolve(__dirname, './'),
 
   // the output path of catalog files (based on current working directory)
-  dest: resolve('./menu.json'),
+  dest: resolve(__dirname, './menu.json'),
 
   // your server running port
   port: '8800',
