@@ -40,7 +40,7 @@ const DocsServer = require('docs-server')
 // Notice: all options is optional
 const app = new DocsServer({
   // should be nodejs current working directory
-  // recommend you keep default value (you project root path)
+  // recommend you keep default value (your project root path)
   cwd: resolve(__dirname, './'),
 
   // the output path of catalog files (based on current working directory)
