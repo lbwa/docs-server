@@ -32,6 +32,7 @@ export interface contentList {
 export interface targetPath {
   cwd: string
   dest: string
+  filter: Function
 }
 
 export interface appOptions {
@@ -40,6 +41,7 @@ export interface appOptions {
   port?: number | string
   directory?: string
   extra?: extraRoute[]
+  filter?: Function
 }
 
 export interface server {

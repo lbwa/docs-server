@@ -21,6 +21,7 @@ function resolve (dir: string): string {
  * @param {String} dest the output path of menu.json(should be a absolute path)
  * @param {String} port server port
  * @param {extraRoute[]} extra extra static resources routes
+ * @param {Function} filter a filter function for filtering origin doc route
  */
 class Application {
   options: appOptions
@@ -33,23 +34,25 @@ class Application {
       cwd = resolve('/'),
       dest = resolve('/menu.json'),
       port = '8800',
-      extra = []
+      extra = [],
+      filter
     }: appOptions = {}
   ) {
-    if (!(this instanceof Application)) {
-      return new Application({
-        cwd,
-        dest,
-        port,
-        extra
-      })
-    }
+    // if (!(this instanceof Application)) {
+    //   return new Application({
+    //     cwd,
+    //     dest,
+    //     port,
+    //     extra
+    //   })
+    // }
 
     this.options = {
       cwd,
       dest,
       port,
-      extra
+      extra,
+      filter
     }
 
     this.activate()
@@ -62,7 +65,11 @@ class Application {
      * 1. this.activeGenerator will be invoked immediately
      * 2. this.gen must be pending status promise when instantiation completed
      */
-    this.genPromise = this.activateGenerator(options.cwd, options.dest)
+    this.genPromise = this.activateGenerator(
+      options.cwd,
+      options.dest,
+      options.filter
+    )
 
     /**
      * 1. async function wouldn't restore execution (enter microtask queue)
@@ -85,13 +92,15 @@ class Application {
    *
    * @param {string} cwd project root path(current working directory)
    * @param {string} dest the output path of menu.json
+   * @param {Function} filter a filter function for filtering origin doc route
    * @returns {Gen} Generator instance
    * @memberof Application
    */
-  activateGenerator (cwd: string, dest: string) {
+  activateGenerator (cwd: string, dest: string, filter: Function) {
     return gen.activate({
       cwd,
-      dest
+      dest,
+      filter
     })
   }
 

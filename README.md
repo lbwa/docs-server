@@ -10,6 +10,8 @@
 
 - Support for specifying additional static resources routes.
 
+- Support for customizing all docs routes
+
 ## Installing
 
 ```bash
@@ -57,9 +59,32 @@ const app = new DocsServer({
         // do something
       }
     }
-  ]
+  ],
+
+  /**
+   * docs routes filter, will not filter your extra routes and menu.json
+   * @param {String} origin: origin routes, equal to your docs path based on root
+   * @return {String} formative string, your expected routes syntax
+   */
+  // origin: 2018/123456-aa/123456-aa.md ----> formative result: /writings/aa
+  filter: (origin) => {
+    const removeShortDate = origin.replace(/\/{0}(\d{6}-)+/g, '')
+    const removeInitialYear = removeShortDate.replace(/^\d{4}/, '')
+    const removeRepeat = removeInitialYear.replace(/^\/\S+\//, '')
+    const removeExtension = removeRepeat.replace(/\.md$/, '')
+    return `writings/${removeExtension}`
+  }
+  // request /writings/aa, get origin data 2018/123456-aa/123456-aa.md
 })
 ```
+
+- ***Notice***:
+
+    - All options is optional
+
+    - default filter will just remove docs file extension name
+
+    - custom filter ***MUST*** return a string type value, and it will be used to only generate docs routes (excluding `extra routes` and `menu.json`)
 
 - Test your building
 

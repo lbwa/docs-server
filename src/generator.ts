@@ -19,15 +19,17 @@ class Gen {
    * activate Generator
    * extract function named `activate` for getting a Promise object
    *
-   * @param {targetPath} { cwd, dest }working path and output path
+   * @param {String} cwd working path
+   * @param {String} dest output path
+   * @param {Function} filter a filter function for filtering origin doc route
    * @returns generator instance
    * @memberof Gen
    */
-  async activate ({ cwd, dest }: targetPath) {
+  async activate ({ cwd, dest, filter }: targetPath) {
     let headMeta: string
 
     try {
-      headMeta = await this.parser(cwd)
+      headMeta = await this.parser(cwd, filter)
     } catch (err) {
       console.error(err)
     }
@@ -45,10 +47,11 @@ class Gen {
    *activate scanner
    *
    * @param {string} path working path
+   * @param {Function} filter a filter function for filtering origin doc route
    * @returns {Promise<catalog>}
    * @memberof Gen
    */
-  async parser (path: string) {
+  async parser (path: string, filter: Function) { // import a filter for basic route
     let catalog: post[] = []
     let docsPromises
 
@@ -79,11 +82,17 @@ class Gen {
       const tags = header.tags
 
       // * optional: filter origin string
-      const removeExtension = origin.replace(/\.md$/, '')
+      let formativeResult: string
+      if (!filter) {
+        // default filter
+        formativeResult = origin.replace(/\.md$/, '')
+      } else {
+        formativeResult = filter(origin)
+      }
 
       const catalogItem = {
         errno: 0,
-        to: removeExtension,
+        to: formativeResult,
         title,
         author,
         date,
@@ -94,7 +103,7 @@ class Gen {
 
       // generate content list, saved by object
       const body: string = raw.body
-      const to: string =  removeExtension
+      const to: string =  formativeResult
 
       // * single content structure
       this.contentList[to] = {

@@ -2,13 +2,17 @@ const request = require('supertest')
 const resolve = require('path').resolve
 const App = require('../dist/index')
 
-describe('TEST: Application', () => {
+describe('TEST: Application, including routes filter\n', () => {
   let app
   before(done => {
     app = new App({
       cwd: resolve(__dirname, '../'),
       dest: resolve(__dirname, '../menu.json'),
       port: '3000',
+      filter: (origin) => {
+        const removeExtension = origin.replace(/\.md$/, '')
+        return `writings/${removeExtension}`
+      },
       extra: [
         {
           route: '/test',
@@ -51,9 +55,9 @@ describe('TEST: Application', () => {
 
   // Make sure this function invoked after generator complete mission,
   // otherwise gen.contentList is empty storage
-  it('GET: doc/sample', done => {
+  it('GET: /writings/doc/sample', done => {
     request(app.server)
-      .get('/doc/sample')
+      .get('/writings/doc/sample')
       .expect(200)
       .end((err, res) => {
         if (err) throw err
@@ -62,9 +66,9 @@ describe('TEST: Application', () => {
       })
   })
 
-  it('GET: doc/nest/sample', done => {
+  it('GET: /writings/doc/nest/sample', done => {
     request(app.server)
-      .get('/doc/nest/sample')
+      .get('/writings/doc/nest/sample')
       .expect(200)
       .end((err, res) => {
         if (err) throw err
