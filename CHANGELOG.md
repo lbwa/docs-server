@@ -1,3 +1,13 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/lbwa/docs-server/compare/v1.0.3...v1.1.0) (2018-08-06)
+
+
+### Features
+
+* **Generator:** support for customizing all docs routes(excluding extra routes and menu.json) ([924849a](https://github.com/lbwa/docs-server/commit/924849a))
+
+
+
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/lbwa/docs-server/compare/v1.0.2...v1.0.3) (2018-08-05)
 
