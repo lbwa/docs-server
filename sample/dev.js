@@ -1,20 +1,18 @@
-import Koa = require('koa')
-
-const DocsServer = require('../src/index')
+const DocsServer = require('../dist/index')
 
 module.exports = new DocsServer({
-  customHeaders: {
+  headers: {
     'Access-Control-Allow-Origin': 'https://set.sh'
   },
   threshold: 1,
-  filter: (origin: string) => {
+  filter: (origin) => {
     const removeExtension = origin.replace(/\.md$/, '')
     return `writings/${removeExtension}`
   },
   extra: [
     {
       route: '/test',
-      middleware: async (ctx: Koa.Context, next: Function) => {
+      middleware: async (ctx, next) => {
         ctx.status = 200
         ctx.body = JSON.stringify({
           errno: 0,

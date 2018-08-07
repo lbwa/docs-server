@@ -2,7 +2,7 @@
   "name": "docs-server",
   "version": "1.3.0",
   "description": "A server which is used to build one of microservices for docs system",
-  "main": "dist/src/index.js",
+  "main": "dist/index.js",
   "files": [
     "dist",
     "src"
@@ -16,8 +16,8 @@
   "private": false,
   "scripts": {
     "ts": "npx tsc",
-    "server": "node dist/sample/dev",
-    "dev": "yarn run ts && yarn run server",
+    "server": "node sample/dev",
+    "dev": "yarn clean && yarn run ts && yarn run server",
     "commit": "git add . && git-cz",
     "clean": "rm -vrf dist/*",
     "test": "yarn ts && cross-env NODE_ENV=test npx mocha test/app.spec.js",

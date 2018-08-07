@@ -1,6 +1,6 @@
 const request = require('supertest')
 const resolve = require('path').resolve
-const App = require('../dist/src/index')
+const App = require('../dist/index')
 
 describe('TEST: Application, including routes filter\n', () => {
   let app
