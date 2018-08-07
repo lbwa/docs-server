@@ -1,5 +1,15 @@
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/lbwa/docs-server/compare/v1.2.0...v1.3.0) (2018-08-07)
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/lbwa/docs-server/compare/v1.1.0...v1.2.0) (2018-08-07)
+
+
+### Features
+
+* **server:** support custom response header and minimum size to turn on gzip ([d9e285e](https://github.com/lbwa/docs-server/commit/d9e285e))
 
 
 
