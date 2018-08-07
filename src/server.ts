@@ -33,14 +33,14 @@ async function ioMiddleware (ctx: Koa.Context, next: Function) {
   }
 }
 
-function setResHeaders (customHeader: resHeaders) {
+function setResHeaders (customHeaders: resHeaders) {
   const baseHeader = {
     // TODO: add filter for origin whitelist
     'Access-Control-Allow-Origin': `*`,
     'vary': 'origin'
   }
 
-  const newHeader = Object.assign(baseHeader, customHeader)
+  const newHeader = Object.assign(baseHeader, customHeaders)
 
   return async function (ctx: Koa.Context, next: Function) {
     ctx.set(newHeader)

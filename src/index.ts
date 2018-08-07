@@ -1,4 +1,4 @@
-import { appOptions, extraRoute } from './config/types'
+import { appOptions, extraRoute, server } from './config/types'
 import Gen from './generator'
 import http = require('http')
 
@@ -20,6 +20,8 @@ function resolve (dir: string): string {
  * @param {String} cwd current working directory(should be a absolute path)
  * @param {String} dest the output path of menu.json(should be a absolute path)
  * @param {String} port server port
+ * @param {Object} headers custom response headers
+ * @param {Number} threshold minimum size in bytes to turn on gzip
  * @param {extraRoute[]} extra extra static resources routes
  * @param {Function} filter a filter function for filtering origin doc route
  */
@@ -34,6 +36,8 @@ class Application {
       cwd = resolve('/'),
       dest = resolve('/menu.json'),
       port = '8800',
+      headers = {},
+      threshold = 1,
       extra = [],
       filter
     }: appOptions = {}
@@ -51,6 +55,8 @@ class Application {
       cwd,
       dest,
       port,
+      headers,
+      threshold,
       extra,
       filter
     }
@@ -81,6 +87,8 @@ class Application {
 
     // Doesn't be invoked until generator complete mission
     this.server = this.activateServer(
+      options.headers,
+      options.threshold,
       this.gen.contentList,
       options.extra,
       options.dest
@@ -106,16 +114,26 @@ class Application {
 
   // ! Notice: Make sure `this` value equal to Application instance
   /**
-   *build local server
+   * build local server
    *
+   * @param {Object} headers custom response headers
+   * @param {Number} threshold minimum size in bytes to turn on gzip
    * @param {Gen['contentList']} contentList content storage
    * @param {extraRoute[]} extra extra static resources routes
    * @returns {http.Server} http.Server instance
    * @memberof Application
    */
-  activateServer (contentList: Gen['contentList'], extra: extraRoute[], dest: string):http.Server {
+  activateServer (
+    customHeaders: server['customHeaders'],
+    threshold: server['threshold'],
+    contentList: Gen['contentList'],
+    extra: extraRoute[],
+    dest: string
+  ):http.Server {
     const port = this.options.port
     const server = new Server({
+      customHeaders,
+      threshold,
       contentList,
       extra,
       dest
