@@ -21,7 +21,7 @@
     "commit": "git add . && git-cz",
     "clean": "rm -vrf dist/*",
     "test": "yarn ts && cross-env NODE_ENV=test npx mocha test/app.spec.js",
-    "changelog": "npx conventional-changelog -p angular -i CHANGELOG.md -s",
+    "changelog": "npx conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "release": "sh scripts/release.sh"
   },
   "dependencies": {
