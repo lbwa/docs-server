@@ -15,7 +15,8 @@
     "removeComments": true
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "sample/**/*"
   ],
   "exclude": [
     "node_modules"
