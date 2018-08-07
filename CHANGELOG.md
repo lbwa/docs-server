@@ -1,3 +1,13 @@
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/lbwa/docs-server/compare/v1.3.1...v1.4.0) (2018-08-07)
+
+
+### Features
+
+* **server:** headerMiddleware option that will be used to replace default header setting middleware ([76e62a6](https://github.com/lbwa/docs-server/commit/76e62a6))
+
+
+
 <a name="1.3.1"></a>
 ## [1.3.1](https://github.com/lbwa/docs-server/compare/v1.3.0...v1.3.1) (2018-08-07)
 
