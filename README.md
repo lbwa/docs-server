@@ -94,8 +94,32 @@ const app = new DocsServer({
     const removeRepeat = removeInitialYear.replace(/^\/\S+\//, '')
     const removeExtension = removeRepeat.replace(/\.md$/, '')
     return `writings/${removeExtension}`
-  }
+  },
   // request /writings/aa, get origin data 2018/123456-aa/123456-aa.md
+
+  /**
+   * a middleware for setting response headers
+   * This options will COVER headers option
+   *
+   * @param {Koa.Context} ctx
+   * @param {Function} next
+   */
+  headerMiddleware: async function (ctx, next) {
+    // do something
+
+    // for example, You can create a white list for CORS origin headers
+    const isInWhitelist = ctx.origin === 'https://github.com'
+      || ctx.origin === 'http://example.com'
+
+    if (isWhitelist) {
+      ctx.set({
+        'Access-Control-Allow-Origin': `${ctx.origin}`
+      })
+    }
+
+    // DON'T forget invoke next()
+    await next()
+  }
 })
 ```
 
@@ -103,9 +127,15 @@ const app = new DocsServer({
 
     - All options is optional
 
-    - default filter will just remove docs file extension name
+    - Default filter will just remove docs file extension name
 
-    - custom filter ***MUST*** return a string type value, and it will be used to only generate docs routes (excluding `extra routes` and `menu.json`)
+    - Custom filter ***MUST*** return a string type value, and it will be used to only generate docs routes (excluding `extra routes` and `menu.json`)
+
+    - Two choices to set response headers
+
+        1. headers: set a headers object that will be used to set response header
+
+        2. headerMiddleware: default middleware will be replaced by your headerMiddleware setting, and DON'T forget invoke next() in middleware function body
 
 - Test your building
 

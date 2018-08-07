@@ -33,7 +33,10 @@ async function ioMiddleware (ctx: Koa.Context, next: Function) {
   }
 }
 
-function setResHeaders (customHeaders: resHeaders) {
+function setResHeaders (
+  customHeaders: resHeaders,
+  headerMiddleware: server['headerMiddleware']
+) {
   const baseHeader = {
     // TODO: add filter for origin whitelist
     'Access-Control-Allow-Origin': `*`,
@@ -42,10 +45,12 @@ function setResHeaders (customHeaders: resHeaders) {
 
   const newHeader = Object.assign(baseHeader, customHeaders)
 
-  return async function (ctx: Koa.Context, next: Function) {
+  async function baseMiddleware (ctx: Koa.Context, next: Function) {
     ctx.set(newHeader)
     await next()
   }
+
+  return headerMiddleware ? headerMiddleware : baseMiddleware
 }
 
 /**
@@ -61,11 +66,12 @@ class Server extends Koa {
     threshold=1,
     contentList = {},
     extra = [],
-    dest = './menu.json'
+    dest = './menu.json',
+    headerMiddleware
   }: server = {}) {
     super()
     this.setIOMiddleware()
-    this.setResHeaders(customHeaders)
+    this.setResHeaders(customHeaders, headerMiddleware)
     this.setGzip(threshold)
     this.setRouter(contentList, extra, dest)
   }
@@ -74,8 +80,11 @@ class Server extends Koa {
     this.use(ioMiddleware)
   }
 
-  setResHeaders (customHeaders: resHeaders = {}) {
-    this.use(setResHeaders(customHeaders))
+  setResHeaders (
+    customHeaders: resHeaders = {},
+    headerMiddleware: server['headerMiddleware']
+  ) {
+    this.use(setResHeaders(customHeaders, headerMiddleware))
   }
 
   setGzip (threshold: number=1) {

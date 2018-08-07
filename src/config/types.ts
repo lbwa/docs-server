@@ -42,7 +42,8 @@ export interface appOptions {
   headers?: resHeaders
   threshold?: number
   extra?: extraRoute[]
-  filter?: Function
+  filter?: Function,
+  headerMiddleware?: headerMiddleware
 }
 
 export interface server {
@@ -51,9 +52,14 @@ export interface server {
   contentList?: contentList
   extra?: extraRoute[]
   dest?: string
+  headerMiddleware?: headerMiddleware
 }
 
 export interface extraRoute {
   route?: string
   middleware?: (ctx: Koa.Context, next: Function) => {}
+}
+
+export interface headerMiddleware {
+  (context: Koa.Context, next: Function): any
 }

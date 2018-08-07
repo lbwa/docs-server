@@ -24,6 +24,7 @@ function resolve (dir: string): string {
  * @param {Number} threshold minimum size in bytes to turn on gzip
  * @param {extraRoute[]} extra extra static resources routes
  * @param {Function} filter a filter function for filtering origin doc route
+ * @param {Function} headerMiddleware a middleware for setting response header
  */
 class Application {
   options: appOptions
@@ -39,18 +40,10 @@ class Application {
       headers = {},
       threshold = 1,
       extra = [],
-      filter
+      filter,
+      headerMiddleware
     }: appOptions = {}
   ) {
-    // if (!(this instanceof Application)) {
-    //   return new Application({
-    //     cwd,
-    //     dest,
-    //     port,
-    //     extra
-    //   })
-    // }
-
     this.options = {
       cwd,
       dest,
@@ -58,7 +51,8 @@ class Application {
       headers,
       threshold,
       extra,
-      filter
+      filter,
+      headerMiddleware
     }
 
     this.activate()
@@ -91,7 +85,8 @@ class Application {
       options.threshold,
       this.gen.contentList,
       options.extra,
-      options.dest
+      options.dest,
+      options.headerMiddleware
     )
   }
 
@@ -112,7 +107,6 @@ class Application {
     })
   }
 
-  // ! Notice: Make sure `this` value equal to Application instance
   /**
    * build local server
    *
@@ -120,6 +114,8 @@ class Application {
    * @param {Number} threshold minimum size in bytes to turn on gzip
    * @param {Gen['contentList']} contentList content storage
    * @param {extraRoute[]} extra extra static resources routes
+   * @param {string} dest the output path of menu.json
+   * @param {Function} headerMiddleware a middleware for setting response header
    * @returns {http.Server} http.Server instance
    * @memberof Application
    */
@@ -128,7 +124,8 @@ class Application {
     threshold: server['threshold'],
     contentList: Gen['contentList'],
     extra: extraRoute[],
-    dest: string
+    dest: string,
+    headerMiddleware: server['headerMiddleware']
   ):http.Server {
     const port = this.options.port
     const server = new Server({
@@ -136,7 +133,8 @@ class Application {
       threshold,
       contentList,
       extra,
-      dest
+      dest,
+      headerMiddleware
     })
     return server.listen(port, () => {
       console.log(`\nServer is listening on http://localhost:${port}\n`)
