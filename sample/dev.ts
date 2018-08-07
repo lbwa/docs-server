@@ -3,6 +3,10 @@ import Koa = require('koa')
 const DocsServer = require('../src/index')
 
 module.exports = new DocsServer({
+  customHeaders: {
+    'Access-Control-Allow-Origin': 'https://set.sh'
+  },
+  threshold: 1,
   filter: (origin: string) => {
     const removeExtension = origin.replace(/\.md$/, '')
     return `writings/${removeExtension}`

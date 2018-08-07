@@ -1,6 +1,6 @@
 const request = require('supertest')
 const resolve = require('path').resolve
-const App = require('../dist/index')
+const App = require('../dist/src/index')
 
 describe('TEST: Application, including routes filter\n', () => {
   let app
@@ -9,6 +9,9 @@ describe('TEST: Application, including routes filter\n', () => {
       cwd: resolve(__dirname, '../'),
       dest: resolve(__dirname, '../menu.json'),
       port: '3000',
+      headers: {
+        'Access-Control-Allow-Methods': 'GET,POST'
+      },
       filter: (origin) => {
         const removeExtension = origin.replace(/\.md$/, '')
         return `writings/${removeExtension}`
@@ -43,10 +46,15 @@ describe('TEST: Application, including routes filter\n', () => {
       .then(() => done())
   })
 
-  it('GET: Home', done => {
+  it('GET: Check response headers', done => {
     request(app.server)
       .get('/')
       .expect(200)
+      .expect('Access-Control-Allow-Origin', '*')
+      .expect('Access-Control-Allow-Methods', 'GET,POST')
+      .expect('Content-Type', 'application/json; charset=utf-8')
+      .expect('Content-Encoding', 'gzip')
+      .expect('Vary', 'origin, Accept-Encoding')
       .end((err, res) => {
         if (err) throw err
         done()
