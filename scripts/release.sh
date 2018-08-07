@@ -2,6 +2,8 @@
 
 set -e
 
+yarn clean
+
 echo "Select a option to release (input a serial number)："
 echo
 

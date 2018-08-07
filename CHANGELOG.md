@@ -1,7 +1,7 @@
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/lbwa/docs-server/compare/v1.2.0...v1.3.0) (2018-08-07)
 
-
+(Wrong version number)
 
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/lbwa/docs-server/compare/v1.1.0...v1.2.0) (2018-08-07)

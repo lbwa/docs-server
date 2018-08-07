@@ -2,7 +2,7 @@
   "name": "docs-server",
   "version": "1.3.0",
   "description": "A server which is used to build one of microservices for docs system",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "files": [
     "dist",
     "src"
@@ -21,7 +21,7 @@
     "commit": "git add . && git-cz",
     "clean": "rm -vrf dist/*",
     "test": "yarn ts && cross-env NODE_ENV=test npx mocha test/app.spec.js",
-    "changelog": "npx conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "changelog": "npx conventional-changelog -p angular -i CHANGELOG.md -s",
     "release": "sh scripts/release.sh"
   },
   "dependencies": {
