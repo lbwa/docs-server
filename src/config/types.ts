@@ -39,7 +39,8 @@ export interface appOptions {
   cwd?: string
   dest?: string
   port?: number | string
-  directory?: string
+  headers?: resHeaders
+  threshold?: number
   extra?: extraRoute[]
   filter?: Function
 }

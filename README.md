@@ -12,6 +12,10 @@
 
 - Support for customizing all docs routes
 
+- Support for customizing docs response headers
+
+- Support for specifying minimum response size in bytes to turn on gzip
+
 ## Installing
 
 ```bash
@@ -50,6 +54,23 @@ const app = new DocsServer({
 
   // your server running port
   port: '8800',
+
+  headers: {
+    // default value: '*'
+    'Access-Control-Allow-Origin': '*',
+
+    // default value: 'origin'
+    'vary': 'origin',
+
+    // Notice: server will set 'Content-Type' header by default
+
+    // other response headers you want set
+    'Access-Control-Allow-Methods': 'GET,POST'
+  },
+
+  // minimum response size in bytes to turn on gzip
+  // default value: 1 bytes
+  threshold: 1
 
   // extra static resource routes
   extra: [

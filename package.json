@@ -16,7 +16,7 @@
   "private": false,
   "scripts": {
     "ts": "npx tsc",
-    "server": "node dist/index",
+    "server": "node dist/sample/dev",
     "dev": "yarn run ts && yarn run server",
     "commit": "git add . && git-cz",
     "clean": "rm -vrf dist/*",
