@@ -1,7 +1,18 @@
+<a name="1.3.1"></a>
+## [1.3.1](https://github.com/lbwa/docs-server/compare/v1.3.0...v1.3.1) (2018-08-07)
+
+
+### Bug Fixes
+
+* correct package main field ([fce7b7e](https://github.com/lbwa/docs-server/commit/fce7b7e))
+* restore dev.ts to dev.js for solving node_modules problem ([a4c9c8c](https://github.com/lbwa/docs-server/commit/a4c9c8c))
+
+
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/lbwa/docs-server/compare/v1.2.0...v1.3.0) (2018-08-07)
 
-(Wrong version number)
+
 
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/lbwa/docs-server/compare/v1.1.0...v1.2.0) (2018-08-07)
