@@ -99,7 +99,7 @@ const app = new DocsServer({
 
   /**
    * a middleware for setting response headers
-   * This options will COVER headers option
+   * This option will COVER headers option
    *
    * @param {Koa.Context} ctx
    * @param {Function} next
@@ -107,7 +107,7 @@ const app = new DocsServer({
   headerMiddleware: async function (ctx, next) {
     // do something
 
-    // for example, You can create a white list for CORS origin headers
+    // for example, You can create a whitelist for CORS origin headers
     const isInWhitelist = ctx.origin === 'https://github.com'
       || ctx.origin === 'http://example.com'
 
