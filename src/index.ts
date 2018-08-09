@@ -63,7 +63,8 @@ class Application {
 
     /**
      * 1. this.activeGenerator will be invoked immediately
-     * 2. this.genPromise must be pending status promise when instantiation completed
+     * 2. this.genPromise must be pending status promise when instantiation
+     * completed (Change status in microtask queue)
      */
     this.genPromise = this.activateGenerator(
       options.cwd,
@@ -72,9 +73,9 @@ class Application {
     )
 
     /**
-     * 1. async function wouldn't restore execution (enter microtask queue)
-     * until Application complete instantiation which means all mission
-     * in the current (macro-)task queue has been completed
+     * 1. async function wouldn't restore execution (means enter microtask
+     * queue) until Application complete instantiation which means the current
+     * (macro-)task has been completed
      * 2. this.gen is invalid until Application complete this own initialization
      */
     this.gen = await this.genPromise
