@@ -63,7 +63,7 @@ class Application {
 
     /**
      * 1. this.activeGenerator will be invoked immediately
-     * 2. this.gen must be pending status promise when instantiation completed
+     * 2. this.genPromise must be pending status promise when instantiation completed
      */
     this.genPromise = this.activateGenerator(
       options.cwd,
@@ -79,7 +79,7 @@ class Application {
      */
     this.gen = await this.genPromise
 
-    // Doesn't be invoked until generator complete mission
+    // Don't be invoked until generator complete mission
     this.server = this.activateServer(
       options.headers,
       options.threshold,
