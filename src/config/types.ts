@@ -61,5 +61,5 @@ export interface extraRoute {
 }
 
 export interface headerMiddleware {
-  (context: Koa.Context, next: Function): any
+  (context: Koa.Context, next: Function): Promise<any>
 }

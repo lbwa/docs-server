@@ -25,9 +25,11 @@ module.exports = function createMenuRoute (
   extra.push({
     route: `/${formatRelative}`,
     middleware: async (ctx: Koa.Context, next: Function) => {
-      // 调整为基于根路径的目标文件路径
       await send(ctx, `./${relative}`, {
-        maxage: 3600,
+        // ms
+        maxage: 3600000,
+
+        // 调整为基于根路径的目标文件路径
         root: path.resolve(process.cwd(), './')
       })
     }
