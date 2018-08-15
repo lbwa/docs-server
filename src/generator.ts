@@ -82,13 +82,9 @@ class Gen {
       const tags = header.tags
 
       // * optional: filter origin string
-      let formativeResult: string
-      if (!filter) {
-        // default filter
-        formativeResult = origin.replace(/\.md$/, '')
-      } else {
-        formativeResult = filter(origin)
-      }
+      let formativeResult: string = filter
+        ? filter(origin)
+        : origin.replace(/\.md$/, '')
 
       const catalogItem = {
         errno: 0,
