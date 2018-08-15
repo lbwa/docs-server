@@ -4,6 +4,7 @@ const App = require('../dist/index')
 const app = require('../sample/dev')
 
 describe(`${chalk.yellow.bold('TEST')}: Application, including routes filter\n`, () => {
+  let etag = ''
   before(done => {
     app.genPromise.then(() => done())
   })
@@ -20,6 +21,17 @@ describe(`${chalk.yellow.bold('TEST')}: Application, including routes filter\n`,
       .expect('Access-Control-Allow-Origin', 'http://127.0.0.1:8800')
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect('Content-Encoding', 'gzip')
+      .end((err, res) => {
+        if (err) throw err
+        etag = res.header.etag
+        done()
+      })
+  })
+  it('GET: check 304 response', done => {
+    request(app.server)
+      .get('/')
+      .set('if-none-match', etag)
+      .expect(304)
       .end((err, res) => {
         if (err) throw err
         done()
