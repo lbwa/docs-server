@@ -1,3 +1,13 @@
+<a name="1.4.1"></a>
+## [1.4.1](https://github.com/lbwa/docs-server/compare/v1.4.0...v1.4.1) (2018-08-15)
+
+
+### Bug Fixes
+
+* adjust max-age of menu route ([d0b7529](https://github.com/lbwa/docs-server/commit/d0b7529))
+
+
+
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/lbwa/docs-server/compare/v1.3.1...v1.4.0) (2018-08-07)
 
