@@ -3,8 +3,9 @@ import compress = require('koa-compress')
 import { resHeaders, server } from './config/types'
 
 const createRouter = require('./routers/index')
-const ioMiddleware = require('./middleware/io')
+const io = require('./middleware/io')
 const resHeaders = require('./middleware/resHeaders')
+const etag = require('./middleware/etag')
 
 /**
  *create a server instance based on Koa
@@ -13,6 +14,7 @@ const resHeaders = require('./middleware/resHeaders')
  * @extends {Koa}
  */
 class Server extends Koa {
+  private __etag: string
   // Once params is empty object, customHeaders and threshold will be set default value
   constructor ({
     customHeaders={},
@@ -23,6 +25,8 @@ class Server extends Koa {
     headerMiddleware
   }: server = {}) {
     super()
+    // every building will generate a new unique Etag
+    this.__etag = etag.createEtag()
     this.setIOMiddleware()
     this.setResHeaders(customHeaders, headerMiddleware)
     this.setGzip(threshold)
@@ -30,13 +34,17 @@ class Server extends Koa {
   }
 
   setIOMiddleware () {
-    this.use(ioMiddleware)
+    this.use(io)
+    // This response will be terminated （304） if pass etag identification
+    // and remainder middleware never be invoked on current request
+    this.use(etag.identify(this.__etag))
   }
 
   setResHeaders (
     customHeaders: resHeaders = {},
     headerMiddleware: server['headerMiddleware']
   ) {
+    this.use(etag(this.__etag))
     this.use(resHeaders(customHeaders, headerMiddleware))
   }
 
@@ -58,3 +66,6 @@ class Server extends Koa {
 }
 
 module.exports = Server
+
+// for types
+export { Server }

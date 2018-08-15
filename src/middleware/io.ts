@@ -3,7 +3,6 @@ const { stringify } = require('../utils/index')
 
 const testMode = process.env.NODE_ENV === 'test'
 
-
 module.exports = async function io (ctx: Koa.Context, next: Function) {
   try {
     if (!testMode) console.log('Request path :', ctx.path)
