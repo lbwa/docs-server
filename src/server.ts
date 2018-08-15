@@ -3,55 +3,8 @@ import compress = require('koa-compress')
 import { resHeaders, server } from './config/types'
 
 const createRouter = require('./routers/index')
-const { stringify } = require('./utils/index')
-const isTest = process.env.NODE_ENV === 'test'
-
-async function ioMiddleware (ctx: Koa.Context, next: Function) {
-  try {
-    if (!isTest) console.log('Request path :', ctx.path)
-    const START = process.hrtime()
-    await next ()
-    const PERIOD = process.hrtime(START)
-    const output = PERIOD[0] * 1e3 + PERIOD[1] * 1e-6
-    const format = output.toLocaleString('zh', {
-      maximumFractionDigits: 4,
-      useGrouping: false
-    })
-    ctx.set({
-      'X-Response-Time': `${format}ms`
-    })
-  } catch (err) {
-    console.error(err)
-    ctx.status = 500
-    ctx.body = stringify({
-      errno: 1,
-      message: `[Internal error]: ${err.message}`
-    })
-    ctx.set({
-      'content-type': 'application/json; charset=utf-8'
-    })
-  }
-}
-
-function setResHeaders (
-  customHeaders: resHeaders,
-  headerMiddleware: server['headerMiddleware']
-) {
-  const baseHeader = {
-    // TODO: add filter for origin whitelist
-    'Access-Control-Allow-Origin': `*`,
-    'vary': 'origin'
-  }
-
-  const newHeader = Object.assign(baseHeader, customHeaders)
-
-  async function baseMiddleware (ctx: Koa.Context, next: Function) {
-    ctx.set(newHeader)
-    await next()
-  }
-
-  return headerMiddleware ? headerMiddleware : baseMiddleware
-}
+const ioMiddleware = require('./middleware/io')
+const resHeaders = require('./middleware/resHeaders')
 
 /**
  *create a server instance based on Koa
@@ -84,7 +37,7 @@ class Server extends Koa {
     customHeaders: resHeaders = {},
     headerMiddleware: server['headerMiddleware']
   ) {
-    this.use(setResHeaders(customHeaders, headerMiddleware))
+    this.use(resHeaders(customHeaders, headerMiddleware))
   }
 
   setGzip (threshold: number=1) {
