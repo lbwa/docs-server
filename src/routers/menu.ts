@@ -26,8 +26,8 @@ module.exports = function createMenuRoute (
     route: `/${formatRelative}`,
     middleware: async (ctx: Koa.Context, next: Function) => {
       await send(ctx, `./${relative}`, {
-        // ms
-        maxage: 3600000,
+        // default cache time: 1 hour
+        maxage: 60 * 60 * 1000,
 
         // 调整为基于根路径的目标文件路径
         root: path.resolve(process.cwd(), './')
