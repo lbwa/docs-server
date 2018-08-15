@@ -35,8 +35,8 @@ class Server extends Koa {
 
   setIOMiddleware () {
     this.use(io)
-    // This response will be terminated （304） if pass etag identification
-    // and remainder middleware never be invoked on current request
+    // current response process end（status 304）when identification passed,
+    // and remainder middleware will not be invoked
     this.use(etag.identify(this.__etag))
   }
 
