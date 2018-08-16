@@ -2,7 +2,13 @@
 
 > A server implementation which is used to build a docs system.
 
-## Feature
+## Why
+
+I create this project just for implementing my docs back-end simply. It's unusual back-end module which is used to build disposable micro-server.
+
+I use this project in some platform which user has no write permission. so this project don't support for adding new docs when server is running. This is intentional. You can use this project to your own documentation module If you have same situation.
+
+## Features
 
 - Perform automatic markdown searching and generate correct dynamic routes according to the root path of your project.
 
@@ -55,6 +61,7 @@ const app = new DocsServer({
   // your server running port
   port: '8800',
 
+  // headersMiddleware option can override this Headers option
   headers: {
     // default value: '*'
     'Access-Control-Allow-Origin': '*',
@@ -129,13 +136,13 @@ const app = new DocsServer({
 
     - Default filter will just remove docs file extension name
 
-    - Custom filter ***MUST*** return a string type value, and it will be used to only generate docs routes (excluding `extra routes` and `menu.json`)
+    - Custom filter ***MUST*** return a string type value, and it will be only used to generate docs routes (excluding `extra routes` and `menu.json`)
 
     - Two choices to set response headers
 
-        1. headers: set a headers object that will be used to set response header
+        1. ***headers***: set a headers object that will be used to set response header
 
-        2. headerMiddleware: default middleware will be replaced by your headerMiddleware setting, and DON'T forget invoke next() in middleware function body
+        2. ***headerMiddleware***: default middleware will be replaced by your headerMiddleware setting, and DON'T forget invoke next() in middleware function body
 
 - Test your building
 
