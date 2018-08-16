@@ -1,3 +1,18 @@
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/lbwa/docs-server/compare/v1.4.1...v1.5.0) (2018-08-16)
+
+
+### Bug Fixes
+
+* **Etag:** correct Etag to string type rather than number type ([5d3a027](https://github.com/lbwa/docs-server/commit/5d3a027))
+
+
+### Features
+
+* **Server:** add Etag module ([17e69d2](https://github.com/lbwa/docs-server/commit/17e69d2))
+
+
+
 <a name="1.4.1"></a>
 ## [1.4.1](https://github.com/lbwa/docs-server/compare/v1.4.0...v1.4.1) (2018-08-15)
 
