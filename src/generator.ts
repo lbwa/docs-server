@@ -22,7 +22,7 @@ class Gen {
    * @param {String} cwd working path
    * @param {String} dest output path
    * @param {Function} filter a filter function for filtering origin doc route
-   * @returns generator instance
+   * @returns {Promise<GenInstance>}
    * @memberof Gen
    */
   async activate ({ cwd, dest, filter }: targetPath) {
