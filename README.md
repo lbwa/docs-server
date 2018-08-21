@@ -6,7 +6,7 @@
 
 I create this project just for implementing my docs back-end simply. It's unusual back-end module which is used to build disposable micro-server.
 
-I use this project in some platform where user has no write permission, so this project don't support for adding new docs when server is running. This is intentional. You can use this project to your own documentation module If you have same situation.
+I use this project in some platform where user has no write permission on runtime mode, so this project don't support for adding new docs when server is running. This is intentional. You can use this project to your own documentation module If you have same situation.
 
 ## Features
 
