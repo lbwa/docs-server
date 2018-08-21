@@ -3,12 +3,14 @@ import { meta, post, initialContent, contentList, targetPath } from './config/ty
 const fs = require('fs')
 const path = require('path')
 const glob = require('glob')
+const stringify = require('./utils/index').stringify
 const readMeta = require('front-matter')
 const formatDate = require('./utils/format-date')
 
 class Gen {
   // contentList is used to be a storage for all docs
   contentList: contentList
+  filter: (origin: string) => string
 
   constructor () {
     // injected docs data when this.activate is invoked
@@ -28,8 +30,10 @@ class Gen {
   async activate ({ cwd, dest, filter }: targetPath) {
     let headMeta: string
 
+    this.filter = filter
+
     try {
-      headMeta = await this.parser(cwd, filter)
+      headMeta = await this.parser(cwd)
     } catch (err) {
       console.error(err)
     }
@@ -51,7 +55,7 @@ class Gen {
    * @returns {Promise<catalog>}
    * @memberof Gen
    */
-  async parser (path: string, filter: Function) { // import a filter for basic route
+  async parser (path: string) { // import a filter for basic route
     let catalog: post[] = []
     let docsPromises
 
@@ -82,13 +86,13 @@ class Gen {
       const tags = header.tags
 
       // * optional: filter origin string
-      let formativeResult: string = filter
-        ? filter(origin)
+      let normalizeRoute: string = this.filter
+        ? this.filter(origin)
         : origin.replace(/\.md$/, '')
 
       const catalogItem = {
         errno: 0,
-        to: formativeResult,
+        to: normalizeRoute,
         title,
         author,
         date,
@@ -99,7 +103,7 @@ class Gen {
 
       // generate content list, saved by object
       const body: string = raw.body
-      const to: string =  formativeResult
+      const to: string =  normalizeRoute
 
       // * single content structure
       this.contentList[to] = {
@@ -114,7 +118,7 @@ class Gen {
       }
     }
 
-    return JSON.stringify(catalog)
+    return stringify(catalog)
   }
 
   /**
@@ -169,7 +173,7 @@ class Gen {
   }
 
   /**
-   *read specific file by async
+   * read specific file by async
    *
    * @param {string} target target file
    * @returns Promise<err | file data>

@@ -32,7 +32,7 @@ export interface contentList {
 export interface targetPath {
   cwd: string
   dest: string
-  filter: Function
+  filter: (origin: string) => string
 }
 
 export interface appOptions {
