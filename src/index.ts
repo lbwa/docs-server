@@ -1,9 +1,9 @@
 import { appOptions, extraRoute, server } from './config/types'
-import Gen from './generator'
 import http = require('http')
+import ServerGenerator from './generator/server'
 
 const Server = require('./server')
-const gen = require('./generator')
+const gen = require('./generator/server')
 const join = require('path').join
 
 /**
@@ -29,8 +29,8 @@ function resolve (dir: string): string {
 class Application {
   options: appOptions
   server: http.Server // http.Server -> to expose `server.close` function
-  genPromise: Promise<Gen>
-  gen: Gen
+  genPromise: Promise<ServerGenerator>
+  gen: ServerGenerator
 
   constructor (
     {
@@ -84,7 +84,7 @@ class Application {
     this.server = this.activateServer(
       options.headers,
       options.threshold,
-      this.gen.contentList,
+      this.gen.contentStorage,
       options.extra,
       options.dest,
       options.headerMiddleware
@@ -101,7 +101,7 @@ class Application {
    * @memberof Application
    */
   activateGenerator (cwd: string, dest: string, filter: Function) {
-    return gen.activate({
+    return gen.run({
       cwd,
       dest,
       filter
@@ -113,7 +113,7 @@ class Application {
    *
    * @param {Object} headers custom response headers
    * @param {Number} threshold minimum size in bytes to turn on gzip
-   * @param {Gen['contentList']} contentList content storage
+   * @param {Gen['contentStorage']} contentStorage content storage
    * @param {extraRoute[]} extra extra static resources routes
    * @param {string} dest the output path of menu.json
    * @param {Function} headerMiddleware a middleware for setting response header
@@ -123,7 +123,7 @@ class Application {
   activateServer (
     customHeaders: server['customHeaders'],
     threshold: server['threshold'],
-    contentList: Gen['contentList'],
+    contentStorage: ServerGenerator['contentStorage'],
     extra: extraRoute[],
     dest: string,
     headerMiddleware: server['headerMiddleware']
@@ -132,7 +132,7 @@ class Application {
     const server = new Server({
       customHeaders,
       threshold,
-      contentList,
+      contentStorage,
       extra,
       dest,
       headerMiddleware

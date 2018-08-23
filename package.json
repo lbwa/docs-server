@@ -26,8 +26,8 @@
   },
   "dependencies": {
     "chalk": "^2.4.1",
-    "front-matter": "^2.3.0",
     "glob": "^7.1.2",
+    "gray-matter": "^4.0.1",
     "koa": "^2.5.2",
     "koa-compress": "^3.0.0",
     "koa-router": "^7.4.0",

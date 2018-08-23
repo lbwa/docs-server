@@ -1,5 +1,5 @@
 import Router = require('koa-router')
-import { contentList, extraRoute } from '../config/types'
+import { contentStorage, extraRoute } from '../config/types'
 
 const logger = require('../utils/logger')
 const home = require('../controllers/home')
@@ -13,16 +13,16 @@ const router = new Router()
 /**
  * create all routes based on configuration
  *
- * @param {contentList} contentList content storage
+ * @param {contentStorage} contentStorage content storage
  * @param {extraRoute[]} extra extra static resources routes
  * @returns a koa router instance
  */
 function createRoutes (
-  contentList: contentList,
+  contentStorage: contentStorage,
   extra: extraRoute[],
   dest: string
 ) {
-  const docsRoutes = Object.keys(contentList)
+  const docsRoutes = Object.keys(contentStorage)
 
   router.get('/', home)
 
@@ -43,16 +43,16 @@ function createRoutes (
 /**
  * create a koa router instance
  *
- * @param {contentList} contentList content storage
+ * @param {contentStorage} contentStorage content storage
  * @param {extraRoute[]} extra extra static resources routes
  * @returns a koa router instance
  */
 module.exports = function createRouter (
-  contentList: contentList,
+  contentStorage: contentStorage,
   extra: extraRoute[],
   dest: string
 ) {
-  createRoutes(contentList, extra, dest)
+  createRoutes(contentStorage, extra, dest)
     .get('*', createErrorHandle(404))
     .all('*', createErrorHandle(405))
 

@@ -20,12 +20,12 @@ interface contentItem extends post {
   data: string
 }
 
-export interface initialContent {
-  contentData: string
+export interface contentWrapper {
+  content: string
   origin: string
 }
 
-export interface contentList {
+export interface contentStorage {
   [path: string]: contentItem
 }
 
@@ -49,7 +49,7 @@ export interface appOptions {
 export interface server {
   customHeaders?: resHeaders
   threshold?: number
-  contentList?: contentList
+  contentStorage?: contentStorage
   extra?: extraRoute[]
   dest?: string
   headerMiddleware?: headerMiddleware

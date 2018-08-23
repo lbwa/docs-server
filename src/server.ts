@@ -19,7 +19,7 @@ class Server extends Koa {
   constructor ({
     customHeaders={},
     threshold=1,
-    contentList = {},
+    contentStorage = {},
     extra = [],
     dest = './menu.json',
     headerMiddleware
@@ -30,7 +30,7 @@ class Server extends Koa {
     this.setIOMiddleware()
     this.setResHeaders(customHeaders, headerMiddleware)
     this.setGzip(threshold)
-    this.setRouter(contentList, extra, dest)
+    this.setRouter(contentStorage, extra, dest)
   }
 
   setIOMiddleware () {
@@ -55,11 +55,11 @@ class Server extends Koa {
   }
 
   setRouter (
-    contentList: server['contentList'],
+    contentStorage: server['contentStorage'],
     extra: server['extra'],
     dest: server['dest']
   ) {
-    const router = createRouter(contentList, extra, dest)
+    const router = createRouter(contentStorage, extra, dest)
     this.use(router.routes())
     this.use(router.allowedMethods())
   }

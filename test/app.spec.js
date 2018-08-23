@@ -39,7 +39,7 @@ describe(`${chalk.yellow.bold('TEST')}: Application, including routes filter\n`,
   })
 
   // Make sure this function invoked after generator complete mission,
-  // otherwise gen.contentList is empty storage
+  // otherwise gen.contentStorage is empty storage
   it('GET: /writings/doc/sample', done => {
     request(app.server)
       .get('/writings/doc/sample')

@@ -1,19 +1,19 @@
 import Koa = require('koa')
-const gen = require('../generator')
+const gen = require('../generator/server')
 const { stringify } = require('../utils/index')
 
 module.exports = async (ctx: Koa.Context, next: Function) => {
   // extract id params
   const path = ctx.path.replace(/^\//, '')
-  const contentList = gen.contentList // sync with gen.contentList, same object
+  const contentStorage = gen.contentStorage // sync with gen.contentStorage, same object
 
-  if (!contentList[path]) {
+  if (!contentStorage[path]) {
     await next()
     return
   }
 
   ctx.status = 200
-  ctx.body = stringify(contentList[path])
+  ctx.body = stringify(contentStorage[path])
   ctx.set({
     'Content-Type': 'application/json; charset=utf-8'
   })

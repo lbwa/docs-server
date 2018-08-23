@@ -1,4 +1,4 @@
-import { meta, post, initialContent, contentList, targetPath } from './config/types'
+import { meta, post, contentWrapper, contentStorage, targetPath } from '../config/types'
 
 const fs = require('fs')
 const path = require('path')
@@ -8,13 +8,14 @@ const readMeta = require('front-matter')
 const formatDate = require('./utils/format-date')
 
 class Gen {
-  // contentList is used to be a storage for all docs
-  contentList: contentList
+  // contentStorage is used to be a storage for all docs
+  contentStorage: contentStorage
+  cwd: string
   filter: (origin: string) => string
 
   constructor () {
     // injected docs data when this.activate is invoked
-    this.contentList = {}
+    this.contentStorage = {}
   }
 
   /**
@@ -27,13 +28,14 @@ class Gen {
    * @returns {Promise<GenInstance>}
    * @memberof Gen
    */
-  async activate ({ cwd, dest, filter }: targetPath) {
+  async run ({ cwd, dest, filter }: targetPath) {
     let headMeta: string
 
+    this.cwd = cwd
     this.filter = filter
 
     try {
-      headMeta = await this.parser(cwd)
+      headMeta = await this.parser()
     } catch (err) {
       console.error(err)
     }
@@ -52,31 +54,32 @@ class Gen {
    *
    * @param {string} path working path
    * @param {Function} filter a filter function for filtering origin doc route
-   * @returns {Promise<catalog>}
+   * @returns {Promise<menu>}
    * @memberof Gen
    */
-  async parser (path: string) { // import a filter for basic route
-    let catalog: post[] = []
-    let docsPromises
+  async parser () { // import a filter for basic route
+    let contentPromises
 
     try {
-      docsPromises = await this.scanner(path)
+      contentPromises = await this.scanner()
     } catch (err) {
       console.error(err)
     }
 
-    for (const initialContent of docsPromises) {
-      let contentData: string
+    // ! loop
+    let menu: post[] = []
+    for (const initialContent of contentPromises) {
+      let content: string
       let origin: string
 
       try {
         // Don't miss the brackets around this expression
-        ({ contentData, origin } = <initialContent>await initialContent)
+        ({ content, origin } = <contentWrapper>await initialContent)
       } catch (err) {
         console.error(err)
       }
 
-      const raw = readMeta(contentData)
+      const raw = readMeta(content)
 
       // generate menu, save it by JSON file
       const header: meta = raw.attributes
@@ -90,7 +93,7 @@ class Gen {
         ? this.filter(origin)
         : origin.replace(/\.md$/, '')
 
-      const catalogItem = {
+      const menuItem = {
         errno: 0,
         to: normalizeRoute,
         title,
@@ -99,14 +102,14 @@ class Gen {
         tags
       }
 
-      catalog.unshift(catalogItem)
+      menu.unshift(menuItem)
 
       // generate content list, saved by object
       const body: string = raw.body
       const to: string =  normalizeRoute
 
       // * single content structure
-      this.contentList[to] = {
+      this.contentStorage[to] = {
         // origin, // this is full path according to root path
         errno: 0,
         to,
@@ -118,7 +121,9 @@ class Gen {
       }
     }
 
-    return stringify(catalog)
+    return stringify(menu)
+
+    // ! loop end
   }
 
   /**
@@ -128,21 +133,21 @@ class Gen {
    * @returns {Promise<singleDocDate>[]}
    * @memberof Gen
    */
-  async scanner (cwd: string) {
+  async scanner () {
     let docsPath: string[] = []
 
     try {
-      docsPath = await this.getDocsPath(cwd)
+      docsPath = await this.getPaths()
     } catch (err) {
       console.error(err)
     }
 
     // asynchronous loading at the same time
-    const docsPromises = docsPath.map(async (doc: string) => {
+    const contentPromises = docsPath.map(async (doc: string) => {
       let docContent: object
 
       try {
-        docContent = await this.readFile(doc)
+        docContent = await this.getContent(doc)
       } catch (err) {
         console.error(err)
       }
@@ -150,9 +155,10 @@ class Gen {
     })
 
     // (Promise<singleDocData>)[]
-    return docsPromises
+    return contentPromises
   }
 
+  // ! deleting start
   /**
    *generate all path
    *
@@ -160,10 +166,10 @@ class Gen {
    * @returns {Promise<string[]>} a Array instance including all path
    * @memberof Gen
    */
-  getDocsPath (cwd: string): Promise<string[]> {
+  getPaths (): Promise<string[]> {
     return new Promise((resolve, reject) => {
       glob('*/**/*.md', {
-        cwd: cwd,
+        cwd: this.cwd,
         ignore: 'node_modules/**/*',
         nodir: true
       }, (err: null | object, docsPath: string[]) => {
@@ -179,18 +185,19 @@ class Gen {
    * @returns Promise<err | file data>
    * @memberof Gen
    */
-  readFile (target: string) {
+  getContent (target: string) {
     // `target` just like 'do/sample/.../sample.md'
     return new Promise((resolve, reject) => {
       fs.readFile(
         path.resolve(process.cwd(), `./${target}`),
         'utf8',
-        (err: Error, contentData: string) => {
-          err ? reject(err) : resolve({origin: target, contentData})
+        (err: Error, content: string) => {
+          err ? reject(err) : resolve({origin: target, content})
         }
       )
     })
   }
+  // ! deleting end
 }
 
 const gen = new Gen()
