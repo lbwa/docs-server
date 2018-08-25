@@ -1,0 +1,12 @@
+{
+  "title": "Hello beautiful world",
+  "date": "2018-08-01T00:00:00.000Z",
+  "author": "Bowen",
+  "tags": [
+    "Typescript",
+    "Node.js"
+  ],
+  "errno": 0,
+  "to": "writings/doc/nest/sample",
+  "content": "\nThis is content from nest directory.\n"
+}

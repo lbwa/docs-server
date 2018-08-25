@@ -1,0 +1,13 @@
+{
+  "title": "Hello world",
+  "date": "2018-08-01T00:00:00.000Z",
+  "author": "Bowen",
+  "tags": [
+    "Javascript",
+    "Typescript",
+    "Node.js"
+  ],
+  "errno": 0,
+  "to": "writings/doc/sample",
+  "content": "\nThis is content of posts.\n"
+}
