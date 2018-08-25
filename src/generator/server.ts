@@ -44,22 +44,19 @@ class ServerGenerator extends BaseGenerator {
        return wrapper
     })
 
+    let completedTag: any
     for (const init of contentPromises) {
-      let content: string
-      let origin: string
-
-      init.then(contentWrapper => {
-        content = contentWrapper.content
-        origin = contentWrapper.origin
-
+      completedTag = init.then(wrapper => {
         this.writeToMemory({
-          origin,
-          content
+          origin: wrapper.origin,
+          content: wrapper.content
         })
       })
     }
 
-    this.createMenu(stringify(this.menu))
+    completedTag.then(() => {
+      this.createMenu(stringify(this.menu))
+    })
   }
 
   writeToMemory ({
@@ -105,17 +102,17 @@ class ServerGenerator extends BaseGenerator {
   }
 
   createMenu (menu: string) {
-    fs.writeFile(this.dest, menu, (err: object) => {
-      err
-        ? console.error(err)
-        : console.log(`\n👌  generate menu successfully in ${this.dest} ! \n`)
-    })
-    // const ws = fs.createWriteStream(this.dest)
-    // ws.on('close', () => {
-    //   console.log(`\n👌  generate menu successfully in ${this.dest} ! \n`)
+    // fs.writeFile(this.dest, menu, (err: object) => {
+    //   err
+    //     ? console.error(err)
+    //     : console.log(`\n👌  generate menu successfully in ${this.dest} ! \n`)
     // })
-    // ws.write(stringify(this.menu))
-    // ws.end()
+    const ws = fs.createWriteStream(this.dest)
+    ws.on('close', () => {
+      console.log(`\n👌  generate menu successfully in ${this.dest} ! \n`)
+    })
+    ws.write(stringify(this.menu))
+    ws.end()
   }
 }
 
