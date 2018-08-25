@@ -16,6 +16,7 @@
   "private": false,
   "scripts": {
     "ts": "npx tsc",
+    "static": "yarn clean && yarn ts && node sample/static",
     "server": "node sample/dev",
     "dev": "yarn clean && yarn run ts && yarn run server",
     "commit": "git add . && git-cz",
@@ -32,7 +33,7 @@
     "koa-compress": "^3.0.0",
     "koa-router": "^7.4.0",
     "koa-send": "^5.0.0",
-    "mark-to-json": "^0.1.1"
+    "mark-to-json": "^0.2.0"
   },
   "devDependencies": {
     "@types/koa": "^2.0.46",

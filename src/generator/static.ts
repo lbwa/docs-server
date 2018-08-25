@@ -3,13 +3,18 @@ import path = require('path')
 
 const Mtj = require('mark-to-json')
 
+type normalize = (path: string) => string
+
 class StaticGenerator extends BaseGenerator {
+  private __normalize: normalize
+
   constructor () {
     super()
   }
 
-  async run (cwd: string) {
+  async run ({cwd, normalize}: {cwd: string, normalize: normalize}) {
     this.cwd = cwd
+    this.__normalize = normalize
     try {
       await this.parser()
     } catch (e) {
@@ -45,12 +50,12 @@ class StaticGenerator extends BaseGenerator {
   }
 
   normalizeRoute (origin: string) {
-    const removeShortDate = origin.replace(/\/{0}(\d{6}-)+/g, '')
-    const removeInitialYear = removeShortDate.replace(/^\d{4}/, '')
-    const removeRepeat = removeInitialYear.replace(/^\/\S+\//, '')
-    const removeExtension = removeRepeat.replace(/\.md$/, '')
-    return `writings/${removeExtension}`
+    return this.__normalize ? this.__normalize(origin) : defaultNormalize(origin)
   }
 }
 
-module.exports = new StaticGenerator()
+export = new StaticGenerator()
+
+function defaultNormalize (origin: string) {
+  return origin.replace(/\.md$/, '')
+}

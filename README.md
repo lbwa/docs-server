@@ -22,6 +22,8 @@ I use this project in some platform where user has no write permission on runtim
 
 - Support for specifying minimum response size in bytes to turn on gzip
 
+- Support `static` mode, You can only generator `JSON` static files without server building.
+
 ## Installing
 
 ```bash
@@ -34,7 +36,7 @@ npm i docs-server
 
 ## Usage
 
-- Easy running
+- Building server from easy way
 
 ```js
 const DocsServer = require('docs-server')
@@ -43,7 +45,9 @@ const DocsServer = require('docs-server')
 const app = new DocsServer()
 ```
 
-- ( Optional ) You can specify your custom configuration.
+### Server mode
+
+- You can specify your custom configuration.
 
 ```js
 const resolve = require('path').resolve
@@ -151,6 +155,29 @@ const app = new DocsServer({
 curl -v http://localhost:8800  # response from /
 curl -v http://localhost:8800/doc/sample # response from /doc/sample
 ```
+
+### Static mode
+
+```js
+const DocsServer = require('docs-server')
+
+// JSON file path will be generated from original markdown files path
+new DocsServer({
+  mode: 'static',
+
+  // Default behavior is only remove files extension
+  staticNormalize (origin) {
+    // do something you like
+    return /* for example */ origin.replace(/\.md$/, '')
+  }
+})
+```
+
+In the static mode, `mode` option is ***required***, and `staticNormalize` is ***optional***. `staticNormalize` option is used to specific what you want to change based on markdown file path.
+
+The sample file under static mode is [here]
+
+[here]:./sample/static.js
 
 ## CHANGELOG
 

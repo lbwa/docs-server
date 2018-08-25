@@ -1,5 +1,6 @@
-import { appOptions, extraRoute, server } from './config/types'
 import http = require('http')
+import staticGenerator = require('./generator/static')
+import { appOptions, extraRoute, server } from './config/types'
 import ServerGenerator from './generator/server'
 
 const Server = require('./server')
@@ -37,22 +38,26 @@ class Application {
       cwd = resolve('/'),
       dest = resolve('/menu.json'),
       port = '8800',
+      mode = 'server',
       headers = {},
       threshold = 1,
       extra = [],
       filter,
-      headerMiddleware
+      headerMiddleware,
+      staticNormalize = null
     }: appOptions = {}
   ) {
     this.options = {
       cwd,
       dest,
       port,
+      mode,
       headers,
       threshold,
       extra,
       filter,
-      headerMiddleware
+      headerMiddleware,
+      staticNormalize
     }
 
     this.run()
@@ -60,6 +65,11 @@ class Application {
 
   async run () {
     const options = this.options
+
+    if (options.mode !== 'server') {
+      this.staticMode()
+      return
+    }
 
     /**
      * 1. this.activeGenerator will be invoked immediately
@@ -89,6 +99,13 @@ class Application {
       options.dest,
       options.headerMiddleware
     )
+  }
+
+  staticMode () {
+    staticGenerator.run({
+      cwd: this.options.cwd,
+      normalize: this.options.staticNormalize
+    })
   }
 
   /**

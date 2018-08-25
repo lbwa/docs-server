@@ -39,11 +39,13 @@ export interface appOptions {
   cwd?: string
   dest?: string
   port?: number | string
+  mode?: string
   headers?: resHeaders
   threshold?: number
   extra?: extraRoute[]
   filter?: Function,
   headerMiddleware?: headerMiddleware
+  staticNormalize? : (path: string) => string
 }
 
 export interface server {

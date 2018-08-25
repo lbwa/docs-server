@@ -1580,12 +1580,13 @@ map-obj@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-2.0.0.tgz#a65cd29087a92598b8791257a523e021222ac1f9"
 
-mark-to-json@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/mark-to-json/-/mark-to-json-0.1.1.tgz#5dd66f56258f6cf8f8f57fc3937f14e8ca0847d0"
+mark-to-json@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/mark-to-json/-/mark-to-json-0.2.0.tgz#bfc6428a7af09d58071e6f48c46f8e595b2e0793"
   dependencies:
     chalk "^2.4.1"
     gray-matter "^4.0.1"
+    mkdirp "^0.5.1"
 
 math-random@^1.0.1:
   version "1.0.1"
@@ -1693,7 +1694,7 @@ minimist@~0.0.1:
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.10.tgz#de3f98543dbf96082be48ad1a0c7cda836301dcf"
 
-mkdirp@0.5.1, mkdirp@0.5.x:
+mkdirp@0.5.1, mkdirp@0.5.x, mkdirp@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:

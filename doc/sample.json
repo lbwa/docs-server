@@ -1,6 +1,6 @@
 {
   "title": "Hello world",
-  "date": "2018-08-01T00:00:00.000Z",
+  "date": "2018-08-01",
   "author": "Bowen",
   "tags": [
     "Javascript",
@@ -8,6 +8,6 @@
     "Node.js"
   ],
   "errno": 0,
-  "to": "writings/doc/sample",
+  "to": "doc/sample",
   "content": "\nThis is content of posts.\n"
 }
