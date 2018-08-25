@@ -1,3 +1,22 @@
+<a name="1.6.0"></a>
+# [1.6.0](https://github.com/lbwa/docs-server/compare/v1.5.0...v1.6.0) (2018-08-25)
+
+
+### Bug Fixes
+
+* **server generator:** correct all server-generator process ([ef55252](https://github.com/lbwa/docs-server/commit/ef55252))
+* **server generator:** correct menu creation process ([caa4649](https://github.com/lbwa/docs-server/commit/caa4649))
+
+
+### Features
+
+* add index.d.ts ([cbbe754](https://github.com/lbwa/docs-server/commit/cbbe754))
+* **generator:** extract generator core for building two creation process ([e9c4b2d](https://github.com/lbwa/docs-server/commit/e9c4b2d))
+* **static-generator:** static-generator prototype ([7ee3cc9](https://github.com/lbwa/docs-server/commit/7ee3cc9))
+* support static / server mode completely ([976058f](https://github.com/lbwa/docs-server/commit/976058f))
+
+
+
 <a name="1.5.0"></a>
 # [1.5.0](https://github.com/lbwa/docs-server/compare/v1.4.1...v1.5.0) (2018-08-16)
 
