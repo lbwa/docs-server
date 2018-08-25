@@ -17,7 +17,7 @@ class StaticGenerator extends BaseGenerator {
     }
   }
 
-  loop (paths: string[]) {
+  async iterator (paths: string[]) {
     // read every markdown
     paths.map(async (singlePath: string) => {
       let content: string

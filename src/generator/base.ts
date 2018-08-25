@@ -22,14 +22,14 @@ export = class BaseGenerator {
       console.error(e)
     }
 
-    this.loop(paths)
+    await this.iterator(paths)
   }
 
   /**
    * get All markdown content Promises wrapper
    * @return {Promise<{origin: string, content: string}>[]}
    */
-  loop (paths: string[]) {
+  async iterator (paths: string[]) {
     createError()
   }
 

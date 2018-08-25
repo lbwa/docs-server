@@ -55,10 +55,10 @@ class Application {
       headerMiddleware
     }
 
-    this.activate()
+    this.run()
   }
 
-  async activate () {
+  async run () {
     const options = this.options
 
     /**
@@ -66,7 +66,7 @@ class Application {
      * 2. this.genPromise must be pending status promise when instantiation
      * completed (Change status in microtask queue)
      */
-    this.genPromise = this.activateGenerator(
+    this.genPromise = this.runGenerator(
       options.cwd,
       options.dest,
       options.filter
@@ -81,7 +81,7 @@ class Application {
     this.gen = await this.genPromise
 
     // Don't be invoked until generator complete mission
-    this.server = this.activateServer(
+    this.server = this.runServer(
       options.headers,
       options.threshold,
       this.gen.contentStorage,
@@ -92,7 +92,7 @@ class Application {
   }
 
   /**
-   *activate generator
+   *run generator
    *
    * @param {string} cwd project root path(current working directory)
    * @param {string} dest the output path of menu.json
@@ -100,7 +100,7 @@ class Application {
    * @returns {Gen} Generator instance
    * @memberof Application
    */
-  activateGenerator (cwd: string, dest: string, filter: Function) {
+  runGenerator (cwd: string, dest: string, filter: Function) {
     return gen.run({
       cwd,
       dest,
@@ -120,7 +120,7 @@ class Application {
    * @returns {http.Server} http.Server instance
    * @memberof Application
    */
-  activateServer (
+  runServer (
     customHeaders: server['customHeaders'],
     threshold: server['threshold'],
     contentStorage: ServerGenerator['contentStorage'],

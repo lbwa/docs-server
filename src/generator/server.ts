@@ -32,7 +32,7 @@ class ServerGenerator extends BaseGenerator {
     return this
   }
 
-  loop (paths: string[]) {
+  async iterator (paths: string[]) {
     const contentPromises = paths.map(async (path: string) => {
       let wrapper: contentWrapper
        try {
@@ -44,19 +44,23 @@ class ServerGenerator extends BaseGenerator {
        return wrapper
     })
 
-    let completedTag: any
     for (const init of contentPromises) {
-      completedTag = init.then(wrapper => {
-        this.writeToMemory({
-          origin: wrapper.origin,
-          content: wrapper.content
-        })
+      let content: string
+      let origin: string
+
+      try {
+        ({ content, origin } = await init)
+      } catch (e) {
+        console.error(e)
+      }
+
+      this.writeToMemory({
+        origin,
+        content
       })
     }
 
-    completedTag.then(() => {
-      this.createMenu(stringify(this.menu))
-    })
+    this.createMenu(stringify(this.menu))
   }
 
   writeToMemory ({
