@@ -22,7 +22,7 @@ I use this project in some platform where user has no write permission on runtim
 
 - Support for specifying minimum response size in bytes to turn on gzip
 
-- Support `static` mode, You can only generator `JSON` static files without server building.
+- Support `static` mode, You can only generate `JSON` static files without server building.
 
 ## Installing
 
@@ -47,7 +47,7 @@ const app = new DocsServer()
 
 ### Server mode
 
-- You can specify your custom configuration.
+You can specify your custom configuration.
 
 ```js
 const resolve = require('path').resolve
@@ -173,7 +173,7 @@ new DocsServer({
 })
 ```
 
-In the static mode, `mode` option is ***required***, and `staticNormalize` is ***optional***. `staticNormalize` option is used to specific what you want to change based on markdown file path.
+In the static mode, `mode` option is ***required***, and `staticNormalize` is ***optional***. `staticNormalize` option is used to specify what you want to change based on markdown file path.
 
 The sample file under static mode is [here]
 
