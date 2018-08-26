@@ -1,3 +1,13 @@
+<a name="1.6.1"></a>
+## [1.6.1](https://github.com/lbwa/docs-server/compare/v1.6.0...v1.6.1) (2018-08-26)
+
+
+### Bug Fixes
+
+* correct 'no getFullYear function' error caused by string type date ([84268fe](https://github.com/lbwa/docs-server/commit/84268fe))
+
+
+
 <a name="1.6.0"></a>
 # [1.6.0](https://github.com/lbwa/docs-server/compare/v1.5.0...v1.6.0) (2018-08-25)
 
