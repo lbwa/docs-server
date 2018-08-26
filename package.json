@@ -33,7 +33,7 @@
     "koa-compress": "^3.0.0",
     "koa-router": "^7.4.0",
     "koa-send": "^5.0.0",
-    "mark-to-json": "^0.2.0"
+    "mark-to-json": "^0.3.0"
   },
   "devDependencies": {
     "@types/koa": "^2.0.46",

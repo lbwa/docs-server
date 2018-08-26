@@ -1,12 +1,1 @@
-{
-  "title": "Hello beautiful world",
-  "date": "2018-08-01",
-  "author": "Bowen",
-  "tags": [
-    "Typescript",
-    "Node.js"
-  ],
-  "errno": 0,
-  "to": "doc/nest/sample",
-  "content": "\nThis is content from nest directory.\n"
-}
+{"title":"Hello beautiful world","date":"2018-08-01","author":"Bowen","tags":["Typescript","Node.js"],"errno":0,"to":"doc/nest/sample","content":"\nThis is content from nest directory.\n"}

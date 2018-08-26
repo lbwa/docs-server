@@ -2,6 +2,7 @@ import BaseGenerator = require('./base')
 import path = require('path')
 
 const Mtj = require('mark-to-json')
+const formatDate = require('../utils/format-date')
 
 type normalize = (path: string) => string
 
@@ -44,7 +45,10 @@ class StaticGenerator extends BaseGenerator {
           errno: 0,
           to: normalized
         },
-        contentKey: 'content'
+        contentKey: 'content',
+        filter (schema: {[key: string]: any}) {
+          schema.date = formatDate(schema.date)
+        }
       })
     })
   }

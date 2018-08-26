@@ -1,13 +1,1 @@
-{
-  "title": "Hello world",
-  "date": "2018-08-01",
-  "author": "Bowen",
-  "tags": [
-    "Javascript",
-    "Typescript",
-    "Node.js"
-  ],
-  "errno": 0,
-  "to": "doc/sample",
-  "content": "\nThis is content of posts.\n"
-}
+{"title":"Hello world","date":"2018 AUG 01","author":"Bowen","tags":["Javascript","Typescript","Node.js"],"errno":0,"to":"doc/sample","content":"\r\nThis is content of posts.\r\n"}
