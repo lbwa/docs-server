@@ -101,7 +101,7 @@ class ServerGenerator extends BaseGenerator {
       author,
       date,
       tags,
-      data: raw.content
+      content: raw.content
     }
   }
 
