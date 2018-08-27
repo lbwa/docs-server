@@ -1,3 +1,13 @@
+<a name="1.6.2"></a>
+## [1.6.2](https://github.com/lbwa/docs-server/compare/v1.6.1...v1.6.2) (2018-08-27)
+
+
+### Bug Fixes
+
+* **server-generator:** integrate server type and static type content structure ([abba52c](https://github.com/lbwa/docs-server/commit/abba52c))
+
+
+
 <a name="1.6.1"></a>
 ## [1.6.1](https://github.com/lbwa/docs-server/compare/v1.6.0...v1.6.1) (2018-08-26)
 
