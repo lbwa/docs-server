@@ -106,11 +106,6 @@ class ServerGenerator extends BaseGenerator {
   }
 
   createMenu (menu: string) {
-    // fs.writeFile(this.dest, menu, (err: object) => {
-    //   err
-    //     ? console.error(err)
-    //     : console.log(`\n👌  generate menu successfully in ${this.dest} ! \n`)
-    // })
     const ws = fs.createWriteStream(this.dest)
     ws.on('close', () => {
       console.log(`\n👌  generate menu successfully in ${this.dest} ! \n`)
