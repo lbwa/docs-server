@@ -17,8 +17,8 @@ class Server extends Koa {
   private __etag: string
   // Once params is empty object, customHeaders and threshold will be set default value
   constructor ({
-    customHeaders={},
-    threshold=1,
+    customHeaders = {},
+    threshold = 1,
     contentStorage = {},
     extra = [],
     dest = './menu.json',
